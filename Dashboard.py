@@ -82,5 +82,10 @@ st.dataframe(picos_preco)
 #gráfico comparando os preços médios por mês e ano (semelhante ao do projeto da Alura) - OK
 #gráfico mostrando as datas que houve pico de preço e o preço - OK
 #gráfico mostrando as datas que houve preço mais baixo e o preço - OK
+#Cartões com:
+#Maior preço histórico, menor preço, desde quando é medido
+#publicar 
+#dar uma olhada nos filtros que a Tainá tá fazendo pra ver se acho o pq não tá funcionando
+#Alimentar pág Desenvolvimento
 
 
