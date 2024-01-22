@@ -91,7 +91,16 @@ st.write('## Insights')
 st.image('img/img_pontos_historicos.JPG', caption='Histórico de preços')
 
 st.markdown('<h3 style="color:#ED7D31; text-align: left;"> Preços mais altos históricos </h3>', unsafe_allow_html = True)
+st.markdown('**Julho/2008:** abc')
+st.markdown('**Maio/2011:** abc')
+st.markdown('**Março/2012:** abc')
+st.markdown('**Março/2022:** abc')
+st.markdown('**Junho/2022:** abc')
+
 st.markdown('<h3 style="color:#70AD47; text-align: left;"> Preços mais baixos históricos </h3>', unsafe_allow_html = True)
+st.markdown('**Janeiro/2009:** abc')
+st.markdown('**Janeiro/2016:** abc')
+st.markdown('**Abril/2020:** abc')
 
 st.dataframe(dados.head(20))
 st.metric('linhas dados',dados.shape[0])
