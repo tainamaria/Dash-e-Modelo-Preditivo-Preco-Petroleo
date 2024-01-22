@@ -112,7 +112,6 @@ def graf_comparativo(dados_historicos_x,dados_historicos_y,dados_testados_x,dado
   fig.update_layout(title= titulo,
   xaxis_title='Data',
   yaxis_title='Fechamento',
-  plot_bgcolor = 'white',
   font = {'family': 'Arial','size': 16,'color': 'black'})
   fig.update_xaxes( showgrid=True, gridwidth=1, gridcolor='lightgray',
   showline=True, linewidth=1, linecolor='black')
