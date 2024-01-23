@@ -90,17 +90,17 @@ with col2:
 st.write('## Insights')
 st.image('img/img_pontos_historicos.JPG', caption='Histórico de preços')
 
-st.markdown('<h3 style="color:#ED7D31; text-align: left;"> Preços mais altos históricos </h3>', unsafe_allow_html = True)
-st.markdown('**Julho/2008:** abc')
-st.markdown('**Maio/2011:** abc')
-st.markdown('**Março/2012:** abc')
-st.markdown('**Março/2022:** abc')
-st.markdown('**Junho/2022:** abc')
+#Altas
+st.markdown('<h3> Principais fatos históricos que afetaram os preços </h3>', unsafe_allow_html = True)
+st.markdown('<p><span style="color:#ED7D31; font-weight: bold">Julho/2008:</span> o fato que culmina no pico de preço do barril de petróleo nesse período, vem acompanhado de uma curva crescente desde o ano de 2004, com instabilidade geopolítica, crescimento da demanda global, especulação no mercado financeiro. Em 2005, por exemplo, o evento climático do furacão Katrina causou danos significativos às instalações de produção de petróleo e gás no Golfo do México, afetando a oferta. Tensões geopolíticas em regiões chave de produção de petróleo, como o Oriente Médio, também contribuíram para a preocupação com a segurança no fornecimento. Eventos como a tensão entre os Estados Unidos e o Irã, assim como conflitos em regiões produtoras, geraram incertezas que influenciaram nos crescentes preços do petróleo.</p>', unsafe_allow_html = True)
+st.markdown('<p> <span style="color:#70AD47; font-weight: bold">Janeiro/2009:</span>   </p>', unsafe_allow_html = True)
+st.markdown('<p> <span style="color:#ED7D31; font-weight: bold">Maio/2011:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True) 
+st.markdown('<p> <span style="color:#ED7D31; font-weight: bold">Março/2012:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True) 
+st.markdown('<p> <span style="color:#70AD47; font-weight: bold">Janeiro/2016:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True)
+st.markdown('<p> <span style="color:#70AD47; font-weight: bold">Abril/2020:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True)
+st.markdown('<p> <span style="color:#ED7D31; font-weight: bold">Março/2022:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True) 
+st.markdown('<p> <span style="color:#ED7D31; font-weight: bold">Junho/2022:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True)  
 
-st.markdown('<h3 style="color:#70AD47; text-align: left;"> Preços mais baixos históricos </h3>', unsafe_allow_html = True)
-st.markdown('**Janeiro/2009:** abc')
-st.markdown('**Janeiro/2016:** abc')
-st.markdown('**Abril/2020:** abc')
 
 st.dataframe(dados.head(20))
 st.metric('linhas dados',dados.shape[0])
