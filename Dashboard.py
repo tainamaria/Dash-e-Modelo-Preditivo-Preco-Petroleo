@@ -101,21 +101,3 @@ st.markdown('<p> <span style="color:#70AD47; font-weight: bold">Abril/2020:</spa
 st.markdown('<p> <span style="color:#ED7D31; font-weight: bold">Março/2022:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True) 
 st.markdown('<p> <span style="color:#ED7D31; font-weight: bold">Junho/2022:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True)  
 
-
-st.dataframe(dados.head(20))
-st.metric('linhas dados',dados.shape[0])
-
-st.dataframe(media_mensal_anos.head(20))
-st.metric('linhas media_mensal',media_mensal_anos.shape[0])
-
-st.dataframe(picos_preco)
-#gráfico comparando os preços médios por mês e ano (semelhante ao do projeto da Alura) - OK
-#gráfico mostrando as datas que houve pico de preço e o preço - OK
-#gráfico mostrando as datas que houve preço mais baixo e o preço - OK
-#Cartões com:
-#Maior preço histórico, menor preço, desde quando é medido - OK
-#publicar - 
-#dar uma olhada nos filtros que a Tainá tá fazendo pra ver se acho o pq não tá funcionando
-#Alimentar pág Desenvolvimento
-
-
