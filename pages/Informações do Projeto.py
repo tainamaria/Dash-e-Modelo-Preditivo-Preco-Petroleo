@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title('Desenvolvimento do Projeto')
+st.title('Desenvolvimento do Projeto 🛠️')
 
 
 
