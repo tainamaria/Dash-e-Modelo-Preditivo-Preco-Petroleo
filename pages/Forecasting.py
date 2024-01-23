@@ -34,13 +34,13 @@ if algoritmo == 'ETS':
     
     figura = graf_comparativo(dados.index.to_numpy(),dados['Preco'].to_numpy(),melhores_dados_teste.index.to_numpy(),fit_train.forecast(len(melhores_dados_teste)).to_numpy(),dias_futuros,fit_train.forecast(90).to_numpy(),'Dados históricos x Previsões')
 
-    st.plotly_chart(figura) 
+st.plotly_chart(figura, use_container_width=True)
 
-    df_forecasting = pd.DataFrame()
-    df_forecasting['Data'] = dias_futuros
-    df_forecasting['Preco'] = fit_train.forecast(90).reset_index(drop=True)
+df_forecasting = pd.DataFrame()
+df_forecasting['Data'] = dias_futuros
+df_forecasting['Preco'] = fit_train.forecast(90).reset_index(drop=True)
 
-    button = st.download_button(
-    label="Baixar Dados Previstos em CSV",
-    data=gerar_conteudo_download(df_forecasting),
-    key="download_button")
+button = st.download_button(
+label="Baixar Dados Previstos em CSV",
+data=gerar_conteudo_download(df_forecasting),
+key="download_button")
