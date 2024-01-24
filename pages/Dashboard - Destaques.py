@@ -17,7 +17,20 @@ with st.spinner("Processando..."):
 df_merged = pd.merge(dados_preco, dados_taxa, left_index=True, right_index=True, how='inner')
 df_merged.Taxa = df_merged.Taxa/100
 
-st.image('img/img_pontos_historicos.JPG', caption='Histórico de preços')
+col1, col2 = st.columns(2)
+with col1:
+    st.image('img/img_pontos_historicos.JPG', caption='Histórico de preços')
+# with col2:
+    # fig_media_mensal_anos = px.line(media_mensal_anos,
+    #                          x = 'Mes',
+    #                          y = 'Preco',
+    #                          markers = True,
+    #                          range_y = (0, media_mensal_anos.max()),
+    #                          color = 'Ano',
+    #                          line_dash = 'Ano',
+    #                          title = 'Média de preço por mês e ano')
+    # fig_media_mensal_anos.update_layout(yaxis_title = 'Média de Preço')
+    # st.plotly_chart(fig_picos_preco, use_container_width=True)
 
 #Altas
 st.markdown('<h3> Principais fatos históricos que afetaram os preços </h3>', unsafe_allow_html = True)
@@ -28,14 +41,12 @@ st.markdown('<p style="text-align: justify;"> <span style="color:#70AD47; font-w
 
 st.markdown('<p style="text-align: justify;"> <span style="color:#ED7D31; font-weight: bold">Maio/2011:</span>  Após a crise do subprime em 2008, diversas economias globais começaram a se recuperar, resultando em um aumento na demanda por energia, especialmente nos países em desenvolvimento. Além disso, eventos geopolíticos, como instabilidades no Oriente Médio e conflitos em importantes regiões produtoras de petróleo, geraram preocupações sobre a segurança no fornecimento, impactando os preços do petróleo. A desvalorização contínua do dólar americano também desempenhou um papel, tornando o petróleo mais caro para compradores que utilizavam outras moedas. Essa combinação de fatores contribuiu para a retomada da trajetória de alta nos preços dos combustíveis durante o período mencionado, culminando em maio de 2011 </p>', unsafe_allow_html = True) 
 
-#TIRAR MARÇO DE 2012 NA IMAGEM
-
 st.markdown('<p style="text-align: justify;"> <span style="color:#70AD47; font-weight: bold">Janeiro/2016:</span>  A queda nos preços do barril de petróleo de julho de 2014 a janeiro de 2016 foi principalmente impulsionada por um excesso de oferta global combinado com uma desaceleração da demanda. A produção de petróleo de xisto nos Estados Unidos aumentou significativamente, tornando o país menos dependente das importações e contribuindo para o aumento da oferta global. Paralelamente, a Organização dos Países Exportadores de Petróleo (OPEP) manteve elevados níveis de produção, em parte para preservar sua participação de mercado em meio à crescente produção de xisto. No entanto, a desaceleração econômica global, especialmente na China, reduziu a demanda por petróleo. O excesso de oferta, combinado com a falta de coordenação entre os principais produtores para reduzir a produção, levou a uma queda acentuada nos preços do petróleo, atingindo seu ponto mais baixo em janeiro de 2016. </p>', unsafe_allow_html = True)
 
 st.markdown('<p style="text-align: justify;"> <span style="color:#70AD47; font-weight: bold">Abril/2020:</span>  A queda abrupta nos preços do barril de petróleo de janeiro a março de 2020 foi amplamente influenciada pela combinação de eventos relacionados à pandemia de COVID-19 e uma guerra de preços entre a Arábia Saudita e a Rússia. A disseminação global do coronavírus resultou em medidas de confinamento e restrições de viagem, reduzindo drasticamente a demanda por petróleo, pois indústrias pararam, viagens diminuíram e a atividade econômica foi significativamente afetada. Em meio a esse cenário, a Arábia Saudita e a Rússia discordaram sobre os cortes na produção para sustentar os preços do petróleo em face da demanda reduzida. Isso levou a uma guerra de preços em que ambos os países aumentaram sua produção, inundando ainda mais o mercado com petróleo em um momento de queda acentuada na demanda </p>', unsafe_allow_html = True)
 
 st.markdown('<p style="text-align: justify;"> <span style="color:#ED7D31; font-weight: bold">Março/2022:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True) 
 
-#TIRAR JUNHO DE 2022 NA IMAGEM  
 
 #AVALIAR COLOCAR O GRÁFICO COM O DÓLAR COMERCIAL HISTÓRICO JA QUE ELE E UM DOS PRINCIPAIS FATORES DA VRIAÇÃO DE PRECOS
+st.dataframe(df_merged)
