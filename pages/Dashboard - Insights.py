@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(page_title= 'Dashboard - Preço dos Combustíveis', layout='wide', page_icon= ':fuelpump:')
+
 ### Insights
 st.write('## Insights')
 st.image('img/img_pontos_historicos.JPG', caption='Histórico de preços')
@@ -15,9 +17,12 @@ st.markdown('<p style="text-align: justify;"> <span style="color:#ED7D31; font-w
 
 #TIRAR MARÇO DE 2012 NA IMAGEM
 
-st.markdown('<p style="text-align: justify;"> <span style="color:#70AD47; font-weight: bold">Janeiro/2016:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True)
-st.markdown('<p style="text-align: justify;"> <span style="color:#70AD47; font-weight: bold">Abril/2020:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True)
+st.markdown('<p style="text-align: justify;"> <span style="color:#70AD47; font-weight: bold">Janeiro/2016:</span>  A queda nos preços do barril de petróleo de julho de 2014 a janeiro de 2016 foi principalmente impulsionada por um excesso de oferta global combinado com uma desaceleração da demanda. A produção de petróleo de xisto nos Estados Unidos aumentou significativamente, tornando o país menos dependente das importações e contribuindo para o aumento da oferta global. Paralelamente, a Organização dos Países Exportadores de Petróleo (OPEP) manteve elevados níveis de produção, em parte para preservar sua participação de mercado em meio à crescente produção de xisto. No entanto, a desaceleração econômica global, especialmente na China, reduziu a demanda por petróleo. O excesso de oferta, combinado com a falta de coordenação entre os principais produtores para reduzir a produção, levou a uma queda acentuada nos preços do petróleo, atingindo seu ponto mais baixo em janeiro de 2016. </p>', unsafe_allow_html = True)
+
+st.markdown('<p style="text-align: justify;"> <span style="color:#70AD47; font-weight: bold">Abril/2020:</span>  A queda abrupta nos preços do barril de petróleo de janeiro a março de 2020 foi amplamente influenciada pela combinação de eventos relacionados à pandemia de COVID-19 e uma guerra de preços entre a Arábia Saudita e a Rússia. A disseminação global do coronavírus resultou em medidas de confinamento e restrições de viagem, reduzindo drasticamente a demanda por petróleo, pois indústrias pararam, viagens diminuíram e a atividade econômica foi significativamente afetada. Em meio a esse cenário, a Arábia Saudita e a Rússia discordaram sobre os cortes na produção para sustentar os preços do petróleo em face da demanda reduzida. Isso levou a uma guerra de preços em que ambos os países aumentaram sua produção, inundando ainda mais o mercado com petróleo em um momento de queda acentuada na demanda </p>', unsafe_allow_html = True)
+
 st.markdown('<p style="text-align: justify;"> <span style="color:#ED7D31; font-weight: bold">Março/2022:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True) 
-st.markdown('<p style="text-align: justify;"> <span style="color:#ED7D31; font-weight: bold">Junho/2022:</span>  xpto xptoxpto xptoxpto xptoxpto xptoxpto xptoxpto xpto </p>', unsafe_allow_html = True)  
+
+#TIRAR JUNHO DE 2022 NA IMAGEM  
 
 #AVALIAR COLOCAR O GRÁFICO COM O DÓLAR COMERCIAL HISTÓRICO JA QUE ELE E UM DOS PRINCIPAIS FATORES DA VRIAÇÃO DE PRECOS
