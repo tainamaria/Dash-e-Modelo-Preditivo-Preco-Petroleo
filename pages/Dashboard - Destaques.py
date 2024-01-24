@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from utils import leitura_csv,webscraping
+from utils import leitura_csv,webscraping,graf_dois_eixos
 
 st.set_page_config(page_title= 'Dashboard - Preço dos Combustíveis', layout='wide', page_icon= ':fuelpump:')
 ### Insights
@@ -14,23 +14,18 @@ with st.spinner("Processando..."):
     arquivo = 'dados_preco_petroleo.csv'
     dados_preco = leitura_csv(arquivo)
 
-df_merged = pd.merge(dados_preco, dados_taxa, left_index=True, right_index=True, how='inner')
-df_merged.Taxa = df_merged.Taxa/100
+    df_merged = pd.merge(dados_preco, dados_taxa, left_index=True, right_index=True, how='inner')
+    df_merged.Taxa = df_merged.Taxa/100
+
+    x = df_merged.index
+    y1 = df_merged.Preco
+    y2 = df_merged.Taxa
 
 col1, col2 = st.columns(2)
 with col1:
     st.image('img/img_pontos_historicos.JPG', caption='Histórico de preços')
-# with col2:
-    # fig_media_mensal_anos = px.line(media_mensal_anos,
-    #                          x = 'Mes',
-    #                          y = 'Preco',
-    #                          markers = True,
-    #                          range_y = (0, media_mensal_anos.max()),
-    #                          color = 'Ano',
-    #                          line_dash = 'Ano',
-    #                          title = 'Média de preço por mês e ano')
-    # fig_media_mensal_anos.update_layout(yaxis_title = 'Média de Preço')
-    # st.plotly_chart(fig_picos_preco, use_container_width=True)
+with col2:
+    st.plotly_chart(graf_dois_eixos(x,y1,y2), use_container_width=True)
 
 #Altas
 st.markdown('<h3> Principais fatos históricos que afetaram os preços </h3>', unsafe_allow_html = True)

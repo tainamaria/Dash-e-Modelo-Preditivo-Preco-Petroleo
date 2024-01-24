@@ -156,3 +156,17 @@ def gerar_conteudo_download(dados):
     b64 = base64.b64encode(csv.encode()).decode()
     return f"data:file/csv;base64,{b64}"
 
+def graf_dois_eixos(x,y1,y2):
+    # Criar um objeto de figura
+    fig = go.Figure()
+    # Adicionar a primeira linha com eixo y à esquerda
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines', name='Preço US$', yaxis='y1'))
+    # Adicionar a segunda linha com eixo y à direita
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines', name='Taxa de Câmbio R$', yaxis='y2'))
+    # Atualizar o layout para mostrar os dois eixos y
+    fig.update_layout(
+        yaxis=dict(title='Preço US$', side='left'),
+        yaxis2=dict(title='Taxa de Câmbio R$', overlaying='y', side='right')
+    )
+    return fig
+
