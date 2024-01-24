@@ -123,7 +123,7 @@ def dias_uteis_futuros(data_inicial,qtd_dias):
 def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric('Data inicial da análise', melhores_dados_teste.index.max().strftime('%d-%m-%Y'))
+        st.metric('Data inicial da análise', melhores_dados_treinamento.index.min().strftime('%d-%m-%Y'))
         st.metric('MAE', melhor_mae.round(2))
     with col2:
         st.metric('Data final da análise', melhores_dados_teste.index.max().strftime('%d-%m-%Y'))
@@ -135,7 +135,7 @@ def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melho
         st.metric('Qtd dias testados', len(melhores_dados_teste))
         st.metric('Períodos Sazonais', melhores_parametros['seasonal_periods'])
     
-    st.markdown('<h3> Dados da previsão </h3>', unsafe_allow_html = True)
+    st.markdown('<h3> Dados da previsão - Referente aos próximos 60 dias</h3>', unsafe_allow_html = True)
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
