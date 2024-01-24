@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from statsmodels.tsa.seasonal import seasonal_decompose
-from funcoes import leitura_csv,decomposicao
+from utils import leitura_csv,decomposicao
 
 st.set_page_config(page_title= 'Componentes de Decomposição - Preço dos Combustíveis', layout='wide', page_icon= ':fuelpump:')
 st.title('Análise Sazonal 📊')
@@ -11,7 +11,8 @@ st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Dec
 st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Decomposição Multiplicativa:</span> Série temporal modelada como o produto dos componentes de tendência, sazonalidade e resíduos. Útil quando a variação sazonal muda proporcionalmente com o nível da série temporal.</p>', unsafe_allow_html = True)
 
 ## LEITURA DOS DADOS DO ARQUIVO GRAVADO
-dados = leitura_csv()
+arquivo = 'dados_preco_petroleo.csv'
+dados = leitura_csv(arquivo)
 
 df_semanal = dados.resample('W')['Preco'].mean()
 df_mensal = dados.resample('M')['Preco'].mean()

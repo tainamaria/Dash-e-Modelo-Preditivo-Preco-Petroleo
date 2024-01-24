@@ -7,24 +7,27 @@ from datetime import timedelta
 import plotly.graph_objects as go
 import base64
 
-def webscraping():
-    dados = pd.read_html('http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view', encoding='utf-8', decimal=',')
+def webscraping(url,coluna):
+    dados = pd.read_html(url, encoding='utf-8', decimal=',')
     dados = dados[2]
     dados.columns = dados.iloc[0]
     dados = dados[1:]
-    dados = dados.rename(columns={'Preço - petróleo bruto - Brent (FOB)': 'Preco'})
+    dados = dados.rename(columns={dados.columns[1]: coluna})
     dados['Data'] = pd.to_datetime(dados['Data'], format = '%d/%m/%Y')
-    dados.Preco = dados.Preco.astype(float)
-    dados.Preco = dados.Preco/100
+    dados[dados.columns[1]] = dados[dados.columns[1]].astype(float)
+    dados[dados.columns[1]]= dados[dados.columns[1]]/100
     dados.set_index('Data', inplace = True)
     dados.sort_index(ascending=True, inplace=True)
-    dados.to_csv('dados_historicos.csv', encoding="utf-8")
+    if coluna == 'Preco':
+        dados.to_csv('dados_preco_petroleo.csv', encoding="utf-8")
+    else:
+        dados.to_csv('dados_taxa_cambio.csv', encoding="utf-8")
     return dados
 
-def leitura_csv():
-    dados = pd.read_csv('dados_historicos.csv', encoding='utf-8')
+def leitura_csv(arquivo):
+    dados = pd.read_csv(arquivo, encoding='utf-8')
     dados['Data'] = pd.to_datetime(dados['Data'], format = '%Y-%m-%d')
-    dados.Preco = dados.Preco.astype(float)
+    dados[dados.columns[1]] = dados[dados.columns[1]].astype(float)
     dados.set_index('Data', inplace = True)
     dados.sort_index(ascending=True, inplace=True)
     return dados
@@ -135,7 +138,7 @@ def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melho
         st.metric('Qtd dias testados', len(melhores_dados_teste))
         st.metric('Períodos Sazonais', melhores_parametros['seasonal_periods'])
     
-    st.markdown('<h3> Dados da previsão - Referente aos próximos 60 dias</h3>', unsafe_allow_html = True)
+    st.markdown('<h3> Dados da previsão - Próximos 60 dias</h3>', unsafe_allow_html = True)
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -152,3 +155,4 @@ def gerar_conteudo_download(dados):
     csv = dados.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()
     return f"data:file/csv;base64,{b64}"
+

@@ -1,9 +1,22 @@
 import streamlit as st
+import pandas as pd
+from utils import leitura_csv,webscraping
 
 st.set_page_config(page_title= 'Dashboard - Preço dos Combustíveis', layout='wide', page_icon= ':fuelpump:')
-
 ### Insights
-st.write('## Insights')
+st.write('## Destaques 🕵️‍♀️')
+
+with st.spinner("Processando..."):
+    url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?serid=38590&module=M'
+    coluna = 'Taxa'
+    dados_taxa = webscraping(url,coluna)
+
+    arquivo = 'dados_preco_petroleo.csv'
+    dados_preco = leitura_csv(arquivo)
+
+df_merged = pd.merge(dados_preco, dados_taxa, left_index=True, right_index=True, how='inner')
+df_merged.Taxa = df_merged.Taxa/100
+
 st.image('img/img_pontos_historicos.JPG', caption='Histórico de preços')
 
 #Altas

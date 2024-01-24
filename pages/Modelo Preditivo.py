@@ -2,7 +2,8 @@
 import streamlit as st
 from datetime import date
 import pandas as pd
-from funcoes import leitura_csv,modelo_ets,graf_comparativo,dias_uteis_futuros,colunas_ets,gerar_conteudo_download
+from utils import leitura_csv,modelo_ets,graf_comparativo,dias_uteis_futuros,colunas_ets,gerar_conteudo_download
+import time
 
 st.set_page_config(page_title= 'Modelo Preditivo - Preço dos Combustíveis', layout='wide', page_icon= ':fuelpump:')
 st.title('Modelo Preditivo :telescope:')
@@ -18,7 +19,8 @@ qtd_dias_previsao = st.sidebar.number_input("Escolha a quantidade de dias que de
 botao_clicado = st.sidebar.button("Aplicar", key="botao1", help="Botão para aplicar no modelo de treino a partir da data selecionada")
 
 ## LEITURA DOS DADOS DO ARQUIVO GRAVADO
-dados = leitura_csv()
+arquivo = 'dados_preco_petroleo.csv'
+dados = leitura_csv(arquivo)
 
 if algoritmo == 'ETS':
     st.header('ETS - Error Tren Seasonality')
@@ -27,8 +29,9 @@ if algoritmo == 'ETS':
         melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, fit_train = modelo_ets(dados, 365)
         colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros)
     else:
-        melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, fit_train = modelo_ets(dados,365)
-        colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros)
+        with st.spinner("Processando..."):
+            melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, fit_train = modelo_ets(dados,365)
+            colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros)
 
     dias_futuros = dias_uteis_futuros(dados.index.max(),90)
     

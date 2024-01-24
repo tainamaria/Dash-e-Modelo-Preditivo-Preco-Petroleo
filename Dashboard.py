@@ -2,13 +2,16 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from funcoes import webscraping
+from utils import webscraping
 
 st.set_page_config(page_title= 'Dashboard - Preço dos Combustíveis', layout='wide', page_icon= ':fuelpump:')
 st.title('Dashboard - Variação do Preço do Petróleo :fuelpump:')
 
 ## LEITURA DOS DADOS NA WEB
-dados = webscraping()
+with st.spinner("Processando..."):
+    url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view'
+    coluna = 'Preco'
+    dados = webscraping(url,coluna)
 
 ## TABELAS
 menor_data = dados.index.min()
@@ -67,7 +70,7 @@ with col2:
 with col3:
     st.metric('Menor preço histórico:', dados['Preco'].min())
 with col4:
-    st.metric('Menor preço histórico:', dados['Preco'].max())
+    st.metric('Maior preço histórico:', dados['Preco'].max())
 
 ### Gráficos
 col1, col2 = st.columns(2)
