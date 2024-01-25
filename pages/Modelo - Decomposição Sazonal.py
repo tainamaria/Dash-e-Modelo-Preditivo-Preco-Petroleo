@@ -51,3 +51,4 @@ elif (modelo == 'Aditivo' and formato == 'Mensal'):
     decomposicao(df_mensal,result_adit_mensal)
 
 
+#Explicar o que é cada gráfico

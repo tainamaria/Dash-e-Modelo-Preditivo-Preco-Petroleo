@@ -32,16 +32,6 @@ fig_linha_data = px.line(dados,
                     title='Linha do tempo', 
                     labels={'index': 'Ano', dados.columns[0]: 'Valor'})
 fig_linha_data.update_layout(yaxis_title = 'Preço')
-
-fig_media_mensal_anos = px.line(media_mensal_anos,
-                             x = 'Mes',
-                             y = 'Preco',
-                             markers = True,
-                             range_y = (0, media_mensal_anos.max()),
-                             color = 'Ano',
-                             line_dash = 'Ano',
-                             title = 'Média de preço por mês e ano')
-fig_media_mensal_anos.update_layout(yaxis_title = 'Média de Preço')
             
 fig_picos_preco = px.bar(picos_preco,
                         x = picos_preco['Mes'].astype(str) + '/' + picos_preco['Ano'].astype(str),
@@ -73,13 +63,29 @@ with col4:
     st.metric('Maior preço histórico:', dados['Preco'].max())
 
 ### Gráficos
+data = st.slider('Selecione o intervalo', min_value=media_mensal_anos['Ano'].min(), max_value=media_mensal_anos['Ano'].max(), value=(2019, media_mensal_anos['Ano'].max()))
 col1, col2 = st.columns(2)
 with col1:
     st.plotly_chart(fig_linha_data, use_container_width=True)
     st.plotly_chart(fig_picos_preco, use_container_width=True)
 with col2:
+    fig_media_mensal_anos = px.line(media_mensal_anos.query('@data[0] <= Ano <= @data[1]'), 
+                             x = 'Mes',
+                             y = 'Preco',
+                             markers = True,
+                             range_y = (0, media_mensal_anos.max()),
+                             color = 'Ano',
+                             line_dash = 'Ano',
+                             title = 'Média de preço por mês e ano')
+    fig_media_mensal_anos.update_layout(yaxis_title = 'Média de Preço')
     st.plotly_chart(fig_media_mensal_anos, use_container_width=True)
     st.plotly_chart(fig_vales_preco, use_container_width=True)    
 
 
+#Colocar símbolo de dolar nas descrições dos eixos
+#Ver se dar para colocar os cartões em azul e arrumar casas decimais e separador para vírgula
+#Ajustar primeiro gráfico para pegar o filtro de ano (usar tvz dados.index.year.query())
+#ESTRESSAR todos os filtros em TODAS AS PÁGINAS 
+#Comentar o código em TODAS AS PÁGINAS
+    
 

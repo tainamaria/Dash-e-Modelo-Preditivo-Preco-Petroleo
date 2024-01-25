@@ -15,3 +15,8 @@ st.markdown('[Site Veja - publicado em abril/2020](https://veja.abril.com.br/eco
 st.markdown('[Jornal Nexo - março/2022](https://www.nexojornal.com.br/expresso/2022/03/17/5-gr%C3%A1ficos-para-entender-20-anos-de-pre%C3%A7os-da-gasolina)')  
 
 
+#Desenhar o modelo no Miro
+#Verificar se é possível inerir um frame com o Miro interativo
+#Melhorar o visual da página 
+#PUBLICAR O GITHUB QUANDO ENTREGAR O PROJETO
+#testar todos os links

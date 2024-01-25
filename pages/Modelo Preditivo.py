@@ -47,3 +47,8 @@ button = st.download_button(
 label="Baixar Dados Previstos em CSV",
 data=gerar_conteudo_download(df_forecasting),
 key="download_button")
+
+#Trocar a data para barra em vez de hifen igual no Dashboard
+#Colocar as datas previstas com valores de pico
+#Explicar a escolha do modelo
+#Inserir o modelo Arima
