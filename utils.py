@@ -160,13 +160,14 @@ def graf_dois_eixos(x,y1,y2):
     # Criar um objeto de figura
     fig = go.Figure()
     # Adicionar a primeira linha com eixo y à esquerda
-    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines', name='Preço US$', yaxis='y1'))
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines', name='Preço do barril de Petróleo (US$)', yaxis='y1'))
     # Adicionar a segunda linha com eixo y à direita
-    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines', name='Taxa de Câmbio R$', yaxis='y2'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines', name='Taxa de Câmbio (R$/US$)', yaxis='y2'))
     # Atualizar o layout para mostrar os dois eixos y
     fig.update_layout(
-        yaxis=dict(title='Preço US$', side='left'),
-        yaxis2=dict(title='Taxa de Câmbio R$', overlaying='y', side='right')
+        yaxis=dict(title='Preço do barril de Petróleo (US$)', side='left'),
+        yaxis2=dict(title='Taxa de Câmbio (R$/US$)', overlaying='y', side='right'),
+        legend=dict(orientation='h', y=1.1, x=0.5, xanchor='center', yanchor='top')
     )
     return fig
 
