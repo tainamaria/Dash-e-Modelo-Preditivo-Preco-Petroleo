@@ -5,7 +5,7 @@ import pandas as pd
 from utils import leitura_csv,modelo_ets,graf_comparativo,dias_uteis_futuros,colunas_ets,gerar_conteudo_download
 import time
 
-st.set_page_config(page_title= 'Modelo Preditivo - Preço dos Combustíveis', layout='wide', page_icon= ':fuelpump:')
+st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
 st.title('Modelo Preditivo :telescope:')
 
 st.markdown('<p style="text-align: justify;">ARIMA (AutoRegressive Integrated Moving Average) e ETS (Error-Trend-Seasonality) são modelos de séries temporais usados para prever valores futuros com base em padrões identificados nos dados históricos.</p>', unsafe_allow_html = True)
@@ -29,9 +29,8 @@ if algoritmo == 'ETS':
         melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, fit_train = modelo_ets(dados, 365)
         colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros)
     else:
-        with st.spinner("Processando..."):
-            melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, fit_train = modelo_ets(dados,365)
-            colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros)
+        melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, fit_train = modelo_ets(dados,365)
+        colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros)
 
     dias_futuros = dias_uteis_futuros(dados.index.max(),90)
     
@@ -52,3 +51,5 @@ key="download_button")
 #Colocar as datas previstas com valores de pico
 #Explicar a escolha do modelo
 #Inserir o modelo Arima
+#Copiar download do git da Keila
+# Ver se os preços tem finais de semana

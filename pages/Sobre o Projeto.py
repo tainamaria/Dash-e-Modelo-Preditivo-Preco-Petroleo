@@ -1,5 +1,6 @@
 import streamlit as st
 
+st.set_page_config(page_title= 'Sobre o Projeto', layout='wide', page_icon= ':fuelpump:')
 st.title('Desenvolvimento do Projeto 🛠️')
 
 

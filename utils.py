@@ -7,6 +7,7 @@ from datetime import timedelta
 import plotly.graph_objects as go
 import base64
 
+@st.cache_data
 def webscraping(url,coluna):
     dados = pd.read_html(url, encoding='utf-8', decimal=',')
     dados = dados[2]
@@ -42,6 +43,7 @@ def decomposicao(dados,resultado):
     st.subheader('Residual')
     st.line_chart(resultado.resid)
 
+@st.cache_resource
 def modelo_ets(dados, qt_dias):
   dados = dados.tail(qt_dias)
   # Definindo os parâmetros a serem testados

@@ -3,7 +3,7 @@ import pandas as pd
 from statsmodels.tsa.seasonal import seasonal_decompose
 from utils import leitura_csv,decomposicao
 
-st.set_page_config(page_title= 'Componentes de Decomposição - Preço dos Combustíveis', layout='wide', page_icon= ':fuelpump:')
+st.set_page_config(page_title= 'Modelo - Decomposição Sazonal', layout='wide', page_icon= ':fuelpump:')
 st.title('Análise Sazonal 📊')
 
 st.markdown('<p style="text-align: justify;"> Na decomposição sazonal de uma série temporal, os termos "multiplicativo" (multi) e "aditivo" (add) referem-se à maneira como os componentes de tendência e sazonalidade são combinados para reconstruir a série original.</p>', unsafe_allow_html = True)

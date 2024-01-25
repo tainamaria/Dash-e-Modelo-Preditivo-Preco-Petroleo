@@ -4,14 +4,13 @@ import pandas as pd
 import plotly.express as px
 from utils import webscraping
 
-st.set_page_config(page_title= 'Dashboard - Preço dos Combustíveis', layout='wide', page_icon= ':fuelpump:')
+st.set_page_config(page_title= 'Dashboard - Preço do Petróleo', layout='wide', page_icon= ':fuelpump:')
 st.title('Dashboard - Variação do Preço do Petróleo :fuelpump:')
 
 ## LEITURA DOS DADOS NA WEB
-with st.spinner("Processando..."):
-    url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view'
-    coluna = 'Preco'
-    dados = webscraping(url,coluna)
+url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view'
+coluna = 'Preco'
+dados = webscraping(url,coluna)
 
 ## TABELAS
 menor_data = dados.index.min()
