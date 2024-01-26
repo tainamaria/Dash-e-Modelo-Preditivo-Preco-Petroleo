@@ -206,6 +206,7 @@ def graf_marcado_multiplos(x, y, picos_indices_max, picos_indices_min,y2):
     fig.add_trace(go.Scatter(x=x, y=y2, mode='lines', name='Taxa de Câmbio (R$/US$)', yaxis='y2'))
 
     fig.update_layout(
+        yaxis=dict(title='Preço do barril de Petróleo (US$)', side='left'),
         yaxis2=dict(title='Taxa de Câmbio (R$/US$)', overlaying='y', side='right'),
         legend=dict(orientation='h', y=1.15, x=0.5, xanchor='center', yanchor='top')
     )
