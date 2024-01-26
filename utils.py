@@ -162,22 +162,32 @@ def mensagem_sucesso():
     time.sleep(10) #timer
     sucesso.empty() #apaga a mensagem após o timer
 
-def graf_dois_eixos(x,y1,y2):
-    # Criar um objeto de figura
+def graf_marcado_max_min(dados):
+    # Encontrar índice do maior e menor Preco
+    indice_maior_preco = dados['Preco'].idxmax()
+    indice_menor_preco = dados['Preco'].idxmin()
+
+    # Plotar o gráfico
     fig = go.Figure()
-    # Adicionar a primeira linha com eixo y à esquerda
-    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines', name='Preço do barril de Petróleo (US$)', yaxis='y1'))
-    # Adicionar a segunda linha com eixo y à direita
-    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines', name='Taxa de Câmbio (R$/US$)', yaxis='y2'))
-    # Atualizar o layout para mostrar os dois eixos y
-    fig.update_layout(
-        yaxis=dict(title='Preço do barril de Petróleo (US$)', side='left'),
-        yaxis2=dict(title='Taxa de Câmbio (R$/US$)', overlaying='y', side='right'),
-        legend=dict(orientation='h', y=1.1, x=0.5, xanchor='center', yanchor='top')
-    )
+
+    # Adicionar dados de linha
+    fig.add_trace(go.Scatter(x=dados['Data'], y=dados['Preco'], mode='lines',showlegend=False))
+
+    # Adicionar pico máximo
+    fig.add_trace(go.Scatter(x=[dados['Data'].loc[indice_maior_preco]], y=[dados['Preco'].loc[indice_maior_preco]],
+                            mode='markers', name='Maior Preço', marker=dict(color='red', size=10)))
+
+    # Adicionar pico mínimo
+    fig.add_trace(go.Scatter(x=[dados['Data'].loc[indice_menor_preco]], y=[dados['Preco'].loc[indice_menor_preco]],
+                            mode='markers', name='Menor Preço', marker=dict(color='green', size=10)))
+
+    # Atualizar layout do gráfico
+    fig.update_layout(title='Linha do tempo',
+                    xaxis_title='Data', yaxis_title='Preço (US$)',legend=dict(orientation='h', y=1.15, x=0.5, xanchor='center', yanchor='top'))
+    
     return fig
 
-def graf_marcado(x, y, picos_indices_max, picos_indices_min,y2):
+def graf_marcado_multiplos(x, y, picos_indices_max, picos_indices_min,y2):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='Preço do barril de Petróleo (US$)'))
 
@@ -194,34 +204,9 @@ def graf_marcado(x, y, picos_indices_max, picos_indices_min,y2):
         fig.add_trace(go.Scatter(x=x_min, y=y_min, mode='markers', name='Mínimos', marker=dict(color='green', size=10)))
 
     fig.add_trace(go.Scatter(x=x, y=y2, mode='lines', name='Taxa de Câmbio (R$/US$)', yaxis='y2'))
-
-    # fig.update_layout(title='Gráfico com Picos Circulares Destacados', xaxis_title='Eixo X', yaxis_title='Eixo Y')
 
     fig.update_layout(
         yaxis2=dict(title='Taxa de Câmbio (R$/US$)', overlaying='y', side='right'),
         legend=dict(orientation='h', y=1.15, x=0.5, xanchor='center', yanchor='top')
     )
-    return fig
-
-def graf_marcado2(x, y, picos_indices_max, picos_indices_min):
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='Preço do barril de Petróleo (US$)'))
-
-    # Adiciona a série de picos mais altos apenas uma vez
-    if np.any(picos_indices_max):
-        x_max = [x[i] for i in picos_indices_max]
-        y_max = [y[i] for i in picos_indices_max]
-        fig.add_trace(go.Scatter(x=x_max, y=y_max, mode='markers', name='Máximos', marker=dict(color='red', size=10)))
-
-    # Adiciona a série de picos mais baixos apenas uma vez
-    if np.any(picos_indices_min):
-        x_min = [x[i] for i in picos_indices_min]
-        y_min = [y[i] for i in picos_indices_min]
-        fig.add_trace(go.Scatter(x=x_min, y=y_min, mode='markers', name='Mínimos', marker=dict(color='green', size=10)))
-
-
-
-    # fig.update_layout(title='Gráfico com Picos Circulares Destacados', xaxis_title='Eixo X', yaxis_title='Eixo Y')
-
-
     return fig

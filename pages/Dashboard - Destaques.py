@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from utils import leitura_csv,webscraping,graf_dois_eixos,graf_marcado
+from utils import leitura_csv,webscraping,graf_marcado_multiplos
 
 st.set_page_config(page_title= 'Dashboard - Destaques', layout='wide', page_icon= ':fuelpump:')
 ### Insights
@@ -23,8 +23,7 @@ y2 = df_merged.Taxa
 
 picos_indices_max = np.where(((y == 143.95) & (x =='2008-07-07')) | ((y == 126.64) & (x == '2011-05-06'))| ((y == 133.18) & (x == '2022-03-08')))[0] 
 picos_indices_min = np.where(((y == 33.73) & (x =='2008-12-30')) | ((y == 26.01) & (x == '2016-01-24')) | ((y == 9.12) & (x == '2020-04-21')))[0] 
-
-st.plotly_chart(graf_marcado(x, y, picos_indices_max, picos_indices_min,y2), use_container_width=True)
+st.plotly_chart(graf_marcado_multiplos(x, y, picos_indices_max, picos_indices_min,y2), use_container_width=True)
 
 #Altas
 st.markdown('<h3> Principais fatos históricos que afetaram os preços: </h3>', unsafe_allow_html = True)

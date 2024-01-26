@@ -2,7 +2,8 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from utils import webscraping
+import numpy as np
+from utils import webscraping,graf_marcado_max_min
 
 st.set_page_config(page_title= 'Dashboard - Preço do Petróleo', layout='wide', page_icon= ':fuelpump:')
 st.title('Dashboard - Variação do Preço do Petróleo :fuelpump:')
@@ -72,13 +73,8 @@ st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
 data = st.slider('Selecione o intervalo', min_value=media_mensal_anos['Ano'].min(), max_value=media_mensal_anos['Ano'].max(), value=(2019, media_mensal_anos['Ano'].max()))
 col1, col2 = st.columns(2)
 with col1:
-    fig_linha_data = px.line(dados_sem_dataindex.query('@data[0] <= Ano <= @data[1]'), 
-                    x= 'Data', 
-                    y=dados.columns[0], 
-                    title='Linha do tempo', 
-                    labels={'Data': 'Ano', dados.columns[0]: 'Valor'})
-    fig_linha_data.update_layout(yaxis_title = 'Preço (US$)')
-    st.plotly_chart(fig_linha_data, use_container_width=True)
+    dados_intervalo = dados_sem_dataindex.query('@data[0] <= Ano <= @data[1]')
+    st.plotly_chart(graf_marcado_max_min(dados_intervalo), use_container_width=True)
     st.divider()
     st.plotly_chart(fig_picos_preco, use_container_width=True)
 with col2:
