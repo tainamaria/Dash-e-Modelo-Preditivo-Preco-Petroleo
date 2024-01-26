@@ -107,7 +107,7 @@ def graf_comparativo(dados_historicos_x,dados_historicos_y,dados_testados_x,dado
 
   fig.update_layout(title= titulo,
   xaxis_title='Data',
-  yaxis_title='Fechamento',
+  yaxis_title='Preço (US$)',
   font = {'family': 'Arial','size': 16,'color': 'black'})
   fig.update_xaxes( showgrid=True, gridwidth=1, gridcolor='lightgray',
   showline=True, linewidth=1, linecolor='black')
@@ -168,7 +168,7 @@ def graf_dois_eixos(x,y1,y2):
     # Atualizar o layout para mostrar os dois eixos y
     fig.update_layout(
         yaxis=dict(title='Preço do barril de Petróleo (US$)', side='left'),
-        yaxis2=dict(title='Taxa de Câmbio (R$/US$)', overlaying='y', side='right'),
+        yaxis2=dict(title='Taxa de Câmbio (US$/R$)', overlaying='y', side='right'),
         legend=dict(orientation='h', y=1.1, x=0.5, xanchor='center', yanchor='top')
     )
     return fig

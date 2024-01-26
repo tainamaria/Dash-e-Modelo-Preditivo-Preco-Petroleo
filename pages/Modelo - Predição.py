@@ -8,6 +8,7 @@ import time
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
 st.title('Modelo Preditivo :telescope:')
 
+st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 st.markdown('<p style="text-align: justify;">ARIMA (AutoRegressive Integrated Moving Average) e ETS (Error-Trend-Seasonality) são modelos de séries temporais usados para prever valores futuros com base em padrões identificados nos dados históricos.</p>', unsafe_allow_html = True)
 st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">ARIMA:</span> Modela a série temporal com base em componentes autoregressivos, diferenciação e médias móveis. Eficaz para dados estacionários ou que podem ser tornados estacionários através de diferenciação. Pode capturar tendências e padrões sazonais. </p>', unsafe_allow_html = True)
 st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">ETS:</span> Modela a série temporal em termos de erro, tendência e sazonalidade. Inclui componentes aditivos e multiplicativos, dependendo da natureza da série. É mais flexível e lida bem com padrões não lineares.</p>', unsafe_allow_html = True)
