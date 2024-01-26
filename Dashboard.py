@@ -104,6 +104,7 @@ with col2:
     #Inserir uma linha vazia acima do slider - OK
 #ESTRESSAR todos os filtros em TODAS AS PÁGINAS - ******** PENDENTE ********
 #Comentar o código em TODAS AS PÁGINAS - ******** PENDENTE ********
+## Cartão com o menor e maior preço do período selecionado
 
 
     
