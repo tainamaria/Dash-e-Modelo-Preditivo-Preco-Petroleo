@@ -6,6 +6,7 @@ from utils import leitura_csv,webscraping,graf_marcado_multiplos
 st.set_page_config(page_title= 'Dashboard - Destaques', layout='wide', page_icon= ':fuelpump:')
 ### Insights
 st.title('Destaques 🕵️‍♀️')
+st.markdown('<p style="text-align: justify;">O Dólar exerce uma influência significativa na flutuação dos preços do barril de petróleo. O gráfico abaixo mostra a variação do preço do barril e da taxa de câmbio Dólar-Real ao longo do tempo, destacando os principais picos e vales nos preços desse período.</p>', unsafe_allow_html = True)
 
 url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?serid=38590&module=M'
 coluna = 'Taxa'

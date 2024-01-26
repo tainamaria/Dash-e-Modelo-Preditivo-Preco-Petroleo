@@ -102,6 +102,5 @@ with col2:
 #Comentar o código em TODAS AS PÁGINAS - ******** PENDENTE ********
 ## Cartão com o menor e maior preço do período selecionado
 
-
     
 

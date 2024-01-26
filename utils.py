@@ -182,7 +182,7 @@ def graf_marcado_max_min(dados):
                             mode='markers', name='Mínimo', marker=dict(color='green', size=10)))
 
     # Atualizar layout do gráfico
-    fig.update_layout(title='Linha do tempo',
+    fig.update_layout(title='Preço por barril de Petróleo ao longo do tempo',
                     xaxis_title='Data', yaxis_title='Preço (US$)',legend=dict(orientation='h', y=1.15, x=0.5, xanchor='center', yanchor='top'))
     
     return fig
@@ -205,7 +205,7 @@ def graf_marcado_multiplos(x, y, picos_indices_max, picos_indices_min,y2):
 
     fig.add_trace(go.Scatter(x=x, y=y2, mode='lines', name='Taxa de Câmbio (R$/US$)', yaxis='y2'))
 
-    fig.update_layout(
+    fig.update_layout( title='Preço do barril de Petróleo x Taxa de Câmbio',
         yaxis=dict(title='Preço do barril de Petróleo (US$)', side='left'),
         yaxis2=dict(title='Taxa de Câmbio (R$/US$)', overlaying='y', side='right'),
         legend=dict(orientation='h', y=1.15, x=0.5, xanchor='center', yanchor='top')
