@@ -5,7 +5,8 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import TimeSeriesSplit
 from datetime import timedelta
 import plotly.graph_objects as go
-import base64
+import time
+import numpy as np
 
 @st.cache_data
 def webscraping(url,coluna):
@@ -128,10 +129,10 @@ def dias_uteis_futuros(data_inicial,qtd_dias):
 def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric('Data inicial da análise', melhores_dados_treinamento.index.min().strftime('%d-%m-%Y'))
+        st.metric('Data inicial da análise', melhores_dados_treinamento.index.min().strftime('%d/%m/%Y'))
         st.metric('MAE', melhor_mae.round(2))
     with col2:
-        st.metric('Data final da análise', melhores_dados_teste.index.max().strftime('%d-%m-%Y'))
+        st.metric('Data final da análise', melhores_dados_teste.index.max().strftime('%d/%m/%Y'))
         st.metric('Tendência', melhores_parametros['trend'])
     with col3:
         st.metric('Qtd dias treinados', len(melhores_dados_treinamento))
@@ -154,9 +155,12 @@ def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melho
     
 
 def gerar_conteudo_download(dados):
-    csv = dados.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()
-    return f"data:file/csv;base64,{b64}"
+    return dados.to_csv(index = False).encode('utf-8')
+
+def mensagem_sucesso():
+    sucesso = st.success('Arquivo baixado com sucesso', icon="✅")
+    time.sleep(10) #timer
+    sucesso.empty() #apaga a mensagem após o timer
 
 def graf_dois_eixos(x,y1,y2):
     # Criar um objeto de figura
@@ -168,8 +172,56 @@ def graf_dois_eixos(x,y1,y2):
     # Atualizar o layout para mostrar os dois eixos y
     fig.update_layout(
         yaxis=dict(title='Preço do barril de Petróleo (US$)', side='left'),
-        yaxis2=dict(title='Taxa de Câmbio (US$/R$)', overlaying='y', side='right'),
+        yaxis2=dict(title='Taxa de Câmbio (R$/US$)', overlaying='y', side='right'),
         legend=dict(orientation='h', y=1.1, x=0.5, xanchor='center', yanchor='top')
     )
     return fig
 
+def graf_marcado(x, y, picos_indices_max, picos_indices_min,y2):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='Preço do barril de Petróleo (US$)'))
+
+    # Adiciona a série de picos mais altos apenas uma vez
+    if np.any(picos_indices_max):
+        x_max = [x[i] for i in picos_indices_max]
+        y_max = [y[i] for i in picos_indices_max]
+        fig.add_trace(go.Scatter(x=x_max, y=y_max, mode='markers', name='Máximos', marker=dict(color='red', size=10)))
+
+    # Adiciona a série de picos mais baixos apenas uma vez
+    if np.any(picos_indices_min):
+        x_min = [x[i] for i in picos_indices_min]
+        y_min = [y[i] for i in picos_indices_min]
+        fig.add_trace(go.Scatter(x=x_min, y=y_min, mode='markers', name='Mínimos', marker=dict(color='green', size=10)))
+
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines', name='Taxa de Câmbio (R$/US$)', yaxis='y2'))
+
+    # fig.update_layout(title='Gráfico com Picos Circulares Destacados', xaxis_title='Eixo X', yaxis_title='Eixo Y')
+
+    fig.update_layout(
+        yaxis2=dict(title='Taxa de Câmbio (R$/US$)', overlaying='y', side='right'),
+        legend=dict(orientation='h', y=1.15, x=0.5, xanchor='center', yanchor='top')
+    )
+    return fig
+
+def graf_marcado2(x, y, picos_indices_max, picos_indices_min):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='Preço do barril de Petróleo (US$)'))
+
+    # Adiciona a série de picos mais altos apenas uma vez
+    if np.any(picos_indices_max):
+        x_max = [x[i] for i in picos_indices_max]
+        y_max = [y[i] for i in picos_indices_max]
+        fig.add_trace(go.Scatter(x=x_max, y=y_max, mode='markers', name='Máximos', marker=dict(color='red', size=10)))
+
+    # Adiciona a série de picos mais baixos apenas uma vez
+    if np.any(picos_indices_min):
+        x_min = [x[i] for i in picos_indices_min]
+        y_min = [y[i] for i in picos_indices_min]
+        fig.add_trace(go.Scatter(x=x_min, y=y_min, mode='markers', name='Mínimos', marker=dict(color='green', size=10)))
+
+
+
+    # fig.update_layout(title='Gráfico com Picos Circulares Destacados', xaxis_title='Eixo X', yaxis_title='Eixo Y')
+
+
+    return fig
