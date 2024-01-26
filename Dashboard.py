@@ -3,12 +3,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import numpy as np
-from utils import webscraping,graf_marcado_max_min
+from utils import webscraping,graf_marcado_max_min,atualiza_dados
 
 #Configuração da página
 st.set_page_config(page_title= 'Dashboard - Preço do Petróleo', layout='wide', page_icon= ':fuelpump:')
 st.title('Dashboard - Variação do Preço do Petróleo :fuelpump:')
-
+atualiza_dados()
 # Webscraping
 url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view'
 coluna = 'Preco'
