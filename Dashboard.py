@@ -1,19 +1,20 @@
-## IMPORTAÇÃO ARQUIVOS
+# Importação das bibliotecas
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import numpy as np
 from utils import webscraping,graf_marcado_max_min
 
+#Configuração da página
 st.set_page_config(page_title= 'Dashboard - Preço do Petróleo', layout='wide', page_icon= ':fuelpump:')
 st.title('Dashboard - Variação do Preço do Petróleo :fuelpump:')
 
-## LEITURA DOS DADOS NA WEB
+# Webscraping
 url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view'
 coluna = 'Preco'
 dados = webscraping(url,coluna)
 
-## TABELAS
+# Construção dos dataframes 
 dados_sem_dataindex = dados.reset_index()
 dados_sem_dataindex['Ano'] = dados_sem_dataindex['Data'].dt.year.astype(int)
 
@@ -25,7 +26,7 @@ picos_preco = media_mensal_anos.set_index('Data').sort_values('Preco', ascending
 
 vales_preco = media_mensal_anos.set_index('Data').sort_values('Preco', ascending=True).head(10)
 
-## GRÁFICOS            
+# Construção dos gráficos          
 fig_picos_preco = px.bar(picos_preco,
                         x = picos_preco['Mes'].astype(str) + '/' + picos_preco['Ano'].astype(str),
                         y = 'Preco',
@@ -43,8 +44,8 @@ fig_vales_preco.update_xaxes(type='category')
 fig_vales_preco.update_layout(xaxis_title= 'Data', yaxis_title = 'Preço (US$)')
 
 
-## VISUALIZAÇÃO NO STREAMLIT
-### Cartões
+# Visualização dos visuais no Streamlit
+## Cartões
 cor_estilizada = 'color: #0145AC;'
 fonte_negrito = 'font-weight: bold;'
 
@@ -65,11 +66,10 @@ with col4:
     metrica4 = dados['Preco'].max()
     data_metrica4 = dados[dados['Preco']==dados['Preco'].max()].index
     st.markdown(f"<h2 style='{cor_estilizada}'> US$ {metrica4:.2f} </h2> <span style='{fonte_negrito}'> Maior preço histórico <br> (atingido em  {data_metrica4[0].strftime('%d/%m/%Y')})</span> ", unsafe_allow_html=True)
-    #st.markdown(f"<h2 style='{cor_estilizada}'> {metrica4:.2f} </h2> <span style='{fonte_negrito}'> Maior preço histórico </span> ", unsafe_allow_html=True) 
 
 st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
 
-### Gráficos
+## Gráficos
 data = st.slider('Selecione o intervalo', min_value=media_mensal_anos['Ano'].min(), max_value=media_mensal_anos['Ano'].max(), value=(2019, media_mensal_anos['Ano'].max()))
 col1, col2 = st.columns(2)
 with col1:
@@ -92,15 +92,7 @@ with col2:
     st.plotly_chart(fig_vales_preco, use_container_width=True)    
 
 
-
-#Colocar símbolo de dolar nas descrições dos eixos - OK
-#Ver se dar para colocar os cartões em azul e arrumar casas decimais - OK
-#Colocar data nos cartões de preço mais alto e mais baixo - OK
-#Ajustar primeiro gráfico para pegar o filtro de ano (usar tvz dados.index.year.query()) - OK
-    #Inserir uma linha vazia acima do slider - OK
 #ESTRESSAR todos os filtros em TODAS AS PÁGINAS - ******** PENDENTE ********
-#Comentar o código em TODAS AS PÁGINAS - ******** PENDENTE ********
-## Cartão com o menor e maior preço do período selecionado
 
     
 

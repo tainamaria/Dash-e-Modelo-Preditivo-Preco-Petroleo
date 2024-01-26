@@ -41,4 +41,3 @@ st.markdown('<p style="text-align: justify;"> <span style="color:green; font-wei
 
 st.markdown('<p style="text-align: justify;"> <span style="color:red; font-weight: bold">Março/2022:</span>  As medidas de contenção da pandemia foram gradualmente relaxadas, impulsionando a demanda por energia à medida que as atividades econômicas se recuperavam. Além disso, a implementação de campanhas de vacinação contra a COVID-19 em vários países melhorou as perspectivas para a recuperação econômica global, contribuindo para a confiança dos investidores nos mercados de commodities. Paralelamente, importantes produtores de petróleo, incluindo membros da OPEP e aliados, como a Rússia, ajustaram a produção, concordando em cortes coordenados para equilibrar a oferta e demanda. </p>', unsafe_allow_html = True) 
 
-#Cortar a imagem para encaixar melhor (selecionar no plotly depois refazer os pontos no ppt)
