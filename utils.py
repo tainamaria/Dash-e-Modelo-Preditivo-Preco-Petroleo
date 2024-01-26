@@ -175,11 +175,11 @@ def graf_marcado_max_min(dados):
 
     # Adicionar pico máximo
     fig.add_trace(go.Scatter(x=[dados['Data'].loc[indice_maior_preco]], y=[dados['Preco'].loc[indice_maior_preco]],
-                            mode='markers', name='Maior Preço', marker=dict(color='red', size=10)))
+                            mode='markers', name='Máximo', marker=dict(color='red', size=10)))
 
     # Adicionar pico mínimo
     fig.add_trace(go.Scatter(x=[dados['Data'].loc[indice_menor_preco]], y=[dados['Preco'].loc[indice_menor_preco]],
-                            mode='markers', name='Menor Preço', marker=dict(color='green', size=10)))
+                            mode='markers', name='Mínimo', marker=dict(color='green', size=10)))
 
     # Atualizar layout do gráfico
     fig.update_layout(title='Linha do tempo',
