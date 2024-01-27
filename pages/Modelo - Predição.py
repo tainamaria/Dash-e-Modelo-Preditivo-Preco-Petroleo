@@ -1,6 +1,5 @@
 ## IMPORTAÇÃO ARQUIVOS
 import streamlit as st
-from datetime import date
 import pandas as pd
 from utils import leitura_csv,modelo_ets,graf_comparativo,dias_uteis_futuros,colunas_ets,gerar_conteudo_download,mensagem_sucesso
 
