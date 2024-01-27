@@ -7,7 +7,7 @@ from datetime import timedelta
 import plotly.graph_objects as go
 import time
 import numpy as np
-from pmdarima.arima import auto_arima
+# from pmdarima.arima import auto_arima
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
@@ -147,26 +147,26 @@ def modelo_ets(dados, qt_dias):
 
   return melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, melhor_resultado_fit
 
-@st.cache_resource
-def modelo_arima(dados,qt_dias_previsao):
-    dados = dados.tail(365) # Últimos 365 anos
-    # Dividir os dados em treino e teste
-    dados_treino = dados.iloc[:-qt_dias_previsao]  # Treinamento: todos os dados exceto os últimos qt_dias_previsao dias
-    dados_teste = dados.iloc[-qt_dias_previsao:]   # Teste: últimos qt_dias_previsao dias
+# @st.cache_resource
+# def modelo_arima(dados,qt_dias_previsao):
+#     dados = dados.tail(365) # Últimos 365 anos
+#     # Dividir os dados em treino e teste
+#     dados_treino = dados.iloc[:-qt_dias_previsao]  # Treinamento: todos os dados exceto os últimos qt_dias_previsao dias
+#     dados_teste = dados.iloc[-qt_dias_previsao:]   # Teste: últimos qt_dias_previsao dias
 
-    # Ajustar o modelo ARIMA usando auto_arima
-    modelo_arima_teste = auto_arima(dados_treino['Preco'], seasonal=False, trace=True) 
+#     # Ajustar o modelo ARIMA usando auto_arima
+#     modelo_arima_teste = auto_arima(dados_treino['Preco'], seasonal=False, trace=True) 
 
-    # Fazer a previsão dos próximos qt_dias_previsao dias
-    previsao = modelo_arima_teste.predict(n_periods=qt_dias_previsao)
+#     # Fazer a previsão dos próximos qt_dias_previsao dias
+#     previsao = modelo_arima_teste.predict(n_periods=qt_dias_previsao)
 
-    # Calcular o erro MAE para a previsão
-    melhor_mae = mean_absolute_error(dados_teste['Preco'], previsao)
+#     # Calcular o erro MAE para a previsão
+#     melhor_mae = mean_absolute_error(dados_teste['Preco'], previsao)
 
-    # Ajustar modelo para os últimos dias
-    modelo_arima= auto_arima(dados['Preco'], seasonal=False, trace=True) 
+#     # Ajustar modelo para os últimos dias
+#     modelo_arima= auto_arima(dados['Preco'], seasonal=False, trace=True) 
 
-    return melhor_mae, dados_teste, dados_treino, modelo_arima_teste, modelo_arima
+#     return melhor_mae, dados_teste, dados_treino, modelo_arima_teste, modelo_arima
 
 # Gráfico de comparação entre os dados históricos, testados e previstos
 def graf_comparativo(dados_historicos_x,dados_historicos_y,dados_testados_x,dados_testados_y,dados_previstos_x,dados_previstos_y,titulo):
@@ -250,63 +250,63 @@ def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melho
         metric12 = preco_min.round(2)
         st.markdown(f"<h2 style='{cor_estilizada}'>{metric12}</h2> <span style='{fonte_negrito}'> Valor do menor pico </span>", unsafe_allow_html=True)
 
-def colunas_arima(melhor_mae, dados_teste, dados_treino, modelo_arima_teste, df_forecasting, qt_dias_previsao):
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        metric13 = dados_treino.index.min().strftime('%d/%m/%Y')
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric13}</h2> <span style='{fonte_negrito}'> Data inicial da análise </span>", unsafe_allow_html=True)
-        metric14 = melhor_mae.round(2)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric14}</h2> <span style='{fonte_negrito}'> MAE </span>", unsafe_allow_html=True)
-    with col2:
-        metric15 = dados_teste.index.max().strftime('%d/%m/%Y')
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric15}</h2> <span style='{fonte_negrito}'> Data final da análise </span>", unsafe_allow_html=True)
-        metric16 = modelo_arima_teste.order[0]
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric16}</h2> <span style='{fonte_negrito}'> p </span>", unsafe_allow_html=True)
-    with col3:
-        metric17 = len(dados_treino)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric17}</h2> <span style='{fonte_negrito}'> Qtd dias treinados </span>", unsafe_allow_html=True)
-        metric18 = modelo_arima_teste.order[1]
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric18}</h2> <span style='{fonte_negrito}'> d </span>", unsafe_allow_html=True)
-    with col4:
-        metric19 = len(dados_teste)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric19}</h2> <span style='{fonte_negrito}'> Qtd dias testados </span>", unsafe_allow_html=True)
-        metric20 = modelo_arima_teste.order[2]
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric20}</h2> <span style='{fonte_negrito}'> q </span>", unsafe_allow_html=True)
+# def colunas_arima(melhor_mae, dados_teste, dados_treino, modelo_arima_teste, df_forecasting, qt_dias_previsao):
+#     col1, col2, col3, col4 = st.columns(4)
+#     with col1:
+#         metric13 = dados_treino.index.min().strftime('%d/%m/%Y')
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric13}</h2> <span style='{fonte_negrito}'> Data inicial da análise </span>", unsafe_allow_html=True)
+#         metric14 = melhor_mae.round(2)
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric14}</h2> <span style='{fonte_negrito}'> MAE </span>", unsafe_allow_html=True)
+#     with col2:
+#         metric15 = dados_teste.index.max().strftime('%d/%m/%Y')
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric15}</h2> <span style='{fonte_negrito}'> Data final da análise </span>", unsafe_allow_html=True)
+#         metric16 = modelo_arima_teste.order[0]
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric16}</h2> <span style='{fonte_negrito}'> p </span>", unsafe_allow_html=True)
+#     with col3:
+#         metric17 = len(dados_treino)
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric17}</h2> <span style='{fonte_negrito}'> Qtd dias treinados </span>", unsafe_allow_html=True)
+#         metric18 = modelo_arima_teste.order[1]
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric18}</h2> <span style='{fonte_negrito}'> d </span>", unsafe_allow_html=True)
+#     with col4:
+#         metric19 = len(dados_teste)
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric19}</h2> <span style='{fonte_negrito}'> Qtd dias testados </span>", unsafe_allow_html=True)
+#         metric20 = modelo_arima_teste.order[2]
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric20}</h2> <span style='{fonte_negrito}'> q </span>", unsafe_allow_html=True)
 
-    st.markdown("<div style='height: 30px;'></div>", unsafe_allow_html=True)  
-    st.markdown(f'<h3> Dados da previsão - Próximos {qt_dias_previsao} dias</h3>', unsafe_allow_html = True)
+#     st.markdown("<div style='height: 30px;'></div>", unsafe_allow_html=True)  
+#     st.markdown(f'<h3> Dados da previsão - Próximos {qt_dias_previsao} dias</h3>', unsafe_allow_html = True)
 
-    df_forecasting['Data'] = pd.to_datetime(df_forecasting['Data'], format = '%d/%m/%Y')
-    df_forecasting.set_index('Data', inplace = True)
+#     df_forecasting['Data'] = pd.to_datetime(df_forecasting['Data'], format = '%d/%m/%Y')
+#     df_forecasting.set_index('Data', inplace = True)
 
-    preco_min = df_forecasting['Preco'].min()
-    data_preco_min = df_forecasting[df_forecasting['Preco']==preco_min].index
+#     preco_min = df_forecasting['Preco'].min()
+#     data_preco_min = df_forecasting[df_forecasting['Preco']==preco_min].index
 
-    preco_max = df_forecasting['Preco'].max()
-    data_preco_max = df_forecasting[df_forecasting['Preco']==preco_max].index
+#     preco_max = df_forecasting['Preco'].max()
+#     data_preco_max = df_forecasting[df_forecasting['Preco']==preco_max].index
 
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        metric21 = data_preco_max[0].strftime('%d/%m/%Y')
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric21}</h2> <span style='{fonte_negrito}'> Data prevista de maior pico </span>", unsafe_allow_html=True)
+#     col1, col2, col3, col4 = st.columns(4)
+#     with col1:
+#         metric21 = data_preco_max[0].strftime('%d/%m/%Y')
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric21}</h2> <span style='{fonte_negrito}'> Data prevista de maior pico </span>", unsafe_allow_html=True)
 
-        #st.metric('Data prevista de maior pico', data_preco_max[0].strftime('%d/%m/%Y'))
-    with col2:
-        metric22 = preco_max.round(2)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric22}</h2> <span style='{fonte_negrito}'> Valor do maior pico </span>", unsafe_allow_html=True)
+#         #st.metric('Data prevista de maior pico', data_preco_max[0].strftime('%d/%m/%Y'))
+#     with col2:
+#         metric22 = preco_max.round(2)
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric22}</h2> <span style='{fonte_negrito}'> Valor do maior pico </span>", unsafe_allow_html=True)
 
-        #st.metric('Valor do maior pico', preco_max.round(2))
-    with col3:
-        metric23 = data_preco_min[0].strftime('%d/%m/%Y')
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric23}</h2> <span style='{fonte_negrito}'> Data prevista de menor pico </span>", unsafe_allow_html=True)
+#         #st.metric('Valor do maior pico', preco_max.round(2))
+#     with col3:
+#         metric23 = data_preco_min[0].strftime('%d/%m/%Y')
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric23}</h2> <span style='{fonte_negrito}'> Data prevista de menor pico </span>", unsafe_allow_html=True)
 
 
-        #st.metric('Data prevista de menor pico', data_preco_min[0].strftime('%d/%m/%Y'))
-    with col4:
-        metric24 = preco_min.round(2)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric24}</h2> <span style='{fonte_negrito}'> Valor do menor pico </span>", unsafe_allow_html=True)
+#         #st.metric('Data prevista de menor pico', data_preco_min[0].strftime('%d/%m/%Y'))
+#     with col4:
+#         metric24 = preco_min.round(2)
+#         st.markdown(f"<h2 style='{cor_estilizada}'>{metric24}</h2> <span style='{fonte_negrito}'> Valor do menor pico </span>", unsafe_allow_html=True)
 
-        #st.metric('Valor do menor pico', preco_min.round(2))
+#         #st.metric('Valor do menor pico', preco_min.round(2))
 
 def gerar_conteudo_download(dados):
     return dados.to_csv(index = False).encode('utf-8')

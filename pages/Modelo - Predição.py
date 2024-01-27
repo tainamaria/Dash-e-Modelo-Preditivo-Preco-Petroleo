@@ -2,7 +2,7 @@
 import streamlit as st
 from datetime import date
 import pandas as pd
-from utils import leitura_csv,modelo_ets,graf_comparativo,dias_uteis_futuros,colunas_ets,gerar_conteudo_download,mensagem_sucesso,modelo_arima,colunas_arima
+from utils import leitura_csv,modelo_ets,graf_comparativo,dias_uteis_futuros,colunas_ets,gerar_conteudo_download,mensagem_sucesso
 
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
 st.title('Modelo Preditivo :telescope:')
@@ -43,18 +43,18 @@ elif algoritmo == 'ARIMA':
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">d:</span> o número de vezes que as observações serão diferenciadas. </p>', unsafe_allow_html = True)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">q:</span> é a ordem do modelo de média móvel.</p>', unsafe_allow_html = True)
 
-    melhor_mae, dados_teste, dados_treino, modelo_arima_teste, modelo_arima = modelo_arima(dados,qt_dias_previsao)
+    # melhor_mae, dados_teste, dados_treino, modelo_arima_teste, modelo_arima = modelo_arima(dados,qt_dias_previsao)
     
-    df_forecasting = pd.DataFrame()
-    dias_futuros = dias_uteis_futuros(dados.index.max(),qt_dias_previsao)
-    df_forecasting['Data'] = dias_futuros
-    df_forecasting['Preco'] = modelo_arima.predict(n_periods=qt_dias_previsao).reset_index(drop=True)
+    # df_forecasting = pd.DataFrame()
+    # dias_futuros = dias_uteis_futuros(dados.index.max(),qt_dias_previsao)
+    # df_forecasting['Data'] = dias_futuros
+    # df_forecasting['Preco'] = modelo_arima.predict(n_periods=qt_dias_previsao).reset_index(drop=True)
     
-    colunas_arima(melhor_mae, dados_teste, dados_treino, modelo_arima_teste, df_forecasting, qt_dias_previsao)
+    # colunas_arima(melhor_mae, dados_teste, dados_treino, modelo_arima_teste, df_forecasting, qt_dias_previsao)
 
-    figura = graf_comparativo(dados.tail(365).index.to_numpy(),dados.tail(365)['Preco'].to_numpy(),dados_teste.index.to_numpy(),modelo_arima_teste.predict(n_periods=len(dados_treino)).to_numpy(),dias_futuros,modelo_arima.predict(n_periods=qt_dias_previsao).to_numpy(),'Dados históricos x Previsões')
+    # figura = graf_comparativo(dados.tail(365).index.to_numpy(),dados.tail(365)['Preco'].to_numpy(),dados_teste.index.to_numpy(),modelo_arima_teste.predict(n_periods=len(dados_treino)).to_numpy(),dias_futuros,modelo_arima.predict(n_periods=qt_dias_previsao).to_numpy(),'Dados históricos x Previsões')
 
-    st.plotly_chart(figura, use_container_width=True)
+    # st.plotly_chart(figura, use_container_width=True)
 
 st.markdown('Escreva um nome para o arquivo:')
 col1, col2 = st.columns(2)
