@@ -94,7 +94,14 @@ def teste_estatistico(dados,string_teste):
     #     # st.pyplot(fig.set_facecolor('none'))
     #     st.plotly_chart(fig)
     #     # st.pyplot(fig)
-    st.pyplot(plot_acf(dados))
+
+    fig = plot_acf(dados, lags=30)
+
+    # Salvar a figura como um arquivo de imagem
+    fig.savefig('acf_plot.png')
+
+    # Exibir a imagem no Streamlit
+    st.image('acf_plot.png')
 
     # col1, col2 = st.columns(2)
     # with col1:
