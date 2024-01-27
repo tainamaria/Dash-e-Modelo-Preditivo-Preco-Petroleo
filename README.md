@@ -23,8 +23,10 @@
    <li>Plotly</li>
    <li>Pandas</li>
    <li>Lxml</li>
-  <li>statsmodels</li>
-  <li>scikit-learn</li>
+  <li>Statsmodels</li>
+  <li>Scikit-learn</li>
+    <li>Matplotlib</li>
+  <li>Numpy</li>
 </ul>
 
 <h2>👩‍🎓 Equipe do projeto</h2>

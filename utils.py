@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 import time
 import numpy as np
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
 
 @st.cache_data
@@ -82,35 +82,21 @@ def teste_estatistico(dados,string_teste):
     
     col1, col2 = st.columns(2)
     with col1:
-        fig = plot_acf(dados, lags=30, title = 'Autocorrelação Simples (ACF)')
-        # st.set_option('deprecation.showPyplotGlobalUse', False)
-        # st.pyplot(fig.set_facecolor('none'))
+        fig, ax = plt.subplots()
+        plot_acf(dados, ax=ax)
+        plt.xlabel('Lag')
+        plt.ylabel('ACF')
+        plt.title('Função de Autocorrelação (ACF)')
+        fig.patch.set_alpha(0)
         st.pyplot(fig)
-        # st.pyplot(fig)
     with col2:
-        fig = plot_pacf(dados, lags=30, title = 'Autocorrelação Parcial (PACF)')
-        # st.set_option('deprecation.showPyplotGlobalUse', False)
-        # st.pyplot(fig.set_facecolor('none'))
+        fig, ax = plt.subplots()
+        plot_pacf(dados, ax=ax)
+        plt.xlabel('Lag')
+        plt.ylabel('PACF')
+        plt.title('Função de Autocorrelação (PACF)')
+        fig.patch.set_alpha(0)
         st.pyplot(fig)
-        # st.pyplot(fig)
-
-    # col1, col2 = st.columns(2)
-    # with col1:
-    #     fig, ax = plt.subplots()
-    #     plot_acf(dados, ax=ax)
-    #     plt.xlabel('Lag')
-    #     plt.ylabel('ACF')
-    #     plt.title('Função de Autocorrelação (ACF)')
-    #     fig.patch.set_alpha(0)
-    #     st.pyplot(fig)
-    # with col2:
-    #     fig, ax = plt.subplots()
-    #     plot_pacf(dados, ax=ax)
-    #     plt.xlabel('Lag')
-    #     plt.ylabel('PACF')
-    #     plt.title('Função de Autocorrelação (PACF)')
-    #     fig.patch.set_alpha(0)
-    #     st.pyplot(fig)
 
 def wmape(y_true, y_pred):
   return np.abs(y_true-y_pred).sum() / np.abs(y_true).sum() #se fosse fazer MAPE não usariamos o abs
