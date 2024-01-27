@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from utils import leitura_csv,webscraping,graf_marcado_multiplos,atualiza_dados
+from utils import leitura_csv,webscraping,graf_marcado_multiplos
 
 #Configuração da página
 st.set_page_config(page_title= 'Dashboard - Destaques', layout='wide', page_icon= ':fuelpump:')
