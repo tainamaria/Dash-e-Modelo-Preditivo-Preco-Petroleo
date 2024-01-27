@@ -12,7 +12,6 @@ from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
 
-@st.cache_data
 def webscraping(url,coluna):
     dados = pd.read_html(url, encoding='utf-8', decimal=',')
     dados = dados[2]
@@ -100,7 +99,6 @@ def teste_estatistico(dados,string_teste):
         fig.patch.set_alpha(0)
         st.pyplot(fig)
 
-@st.cache_resource
 def modelo_ets(dados, qt_dias):
   dados = dados.tail(qt_dias)
   # Definindo os parâmetros a serem testados
