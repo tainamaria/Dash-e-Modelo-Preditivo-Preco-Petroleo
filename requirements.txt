@@ -5,4 +5,4 @@ pandas==2.1.4
 lxml==5.1.0
 statsmodels==0.14.1
 scikit-learn==1.4.0
-pmdarima-2.0.4
+pmdarima==2.0.4
