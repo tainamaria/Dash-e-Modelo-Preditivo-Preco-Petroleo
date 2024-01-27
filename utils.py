@@ -9,7 +9,7 @@ import time
 import numpy as np
 # from pmdarima.arima import auto_arima
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
 
 @st.cache_data
@@ -82,23 +82,23 @@ def teste_estatistico(dados,string_teste):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Simples (ACF):</span> os picos indicam a correlação entre a série temporal atual e suas observações passadas em vários lags. Se houver picos significativos em intervalos regulares, isso sugere a presença de sazonalidade na série temporal.</p>', unsafe_allow_html = True)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Parcial (PACF):</span> os picos representam a correlação entre a série temporal atual e suas observações passadas, removendo o efeito das observações intermediárias. Picos significativos em intervalos regulares no PACF também indicam a presença de sazonalidade.</p>', unsafe_allow_html = True)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        fig, ax = plt.subplots()
-        plot_acf(dados, ax=ax)
-        plt.xlabel('Lag')
-        plt.ylabel('ACF')
-        plt.title('Função de Autocorrelação (ACF)')
-        fig.patch.set_alpha(0)
-        st.pyplot(fig)
-    with col2:
-        fig, ax = plt.subplots()
-        plot_pacf(dados, ax=ax)
-        plt.xlabel('Lag')
-        plt.ylabel('PACF')
-        plt.title('Função de Autocorrelação (PACF)')
-        fig.patch.set_alpha(0)
-        st.pyplot(fig)
+    # col1, col2 = st.columns(2)
+    # with col1:
+    #     fig, ax = plt.subplots()
+    #     plot_acf(dados, ax=ax)
+    #     plt.xlabel('Lag')
+    #     plt.ylabel('ACF')
+    #     plt.title('Função de Autocorrelação (ACF)')
+    #     fig.patch.set_alpha(0)
+    #     st.pyplot(fig)
+    # with col2:
+    #     fig, ax = plt.subplots()
+    #     plot_pacf(dados, ax=ax)
+    #     plt.xlabel('Lag')
+    #     plt.ylabel('PACF')
+    #     plt.title('Função de Autocorrelação (PACF)')
+    #     fig.patch.set_alpha(0)
+    #     st.pyplot(fig)
 
 @st.cache_resource
 def modelo_ets(dados, qt_dias):
