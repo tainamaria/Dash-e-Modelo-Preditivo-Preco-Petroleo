@@ -1,7 +1,7 @@
 ## IMPORTAÇÃO ARQUIVOS
 import streamlit as st
 import pandas as pd
-from utils import leitura_csv
+from funcoes import leitura_csv
 # ,modelo_ets,graf_comparativo,dias_uteis_futuros,colunas_ets,gerar_conteudo_download,mensagem_sucesso
 
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
