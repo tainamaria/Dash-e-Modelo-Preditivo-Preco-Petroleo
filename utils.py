@@ -8,6 +8,9 @@ import plotly.graph_objects as go
 import time
 import numpy as np
 from pmdarima.arima import auto_arima
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+import matplotlib.pyplot as plt
+from statsmodels.tsa.stattools import adfuller
 
 @st.cache_data
 def webscraping(url,coluna):
@@ -46,11 +49,56 @@ def decomposicao(dados,resultado):
     st.subheader('Série Temporal Original')
     st.line_chart(dados)
     st.subheader('Tendência')
+    st.markdown('<p style="text-align: justify;">Quando falamos sobre tendência na decomposição de uma série temporal, estamos interessados em identificar padrões de crescimento ou declínio que ocorrem ao longo de um período de tempo significativo, ignorando as variações sazonais e flutuações aleatórias que podem ocorrer em escalas de tempo menores.</p>', unsafe_allow_html = True)
     st.line_chart(resultado.trend)
     st.subheader('Sazonalidade')
+    st.markdown('<p style="text-align: justify;">A sazonalidade indica variações sistemáticas que ocorrem em determinados momentos ou períodos do ano e são independentes da tendência de longo prazo e das flutuações aleatórias na série temporal. Ela reflete regularidades que podem ser observadas ao longo de múltiplos ciclos sazonais.</p>', unsafe_allow_html = True)
     st.line_chart(resultado.seasonal)
     st.subheader('Residual')
+    st.markdown('<p style="text-align: justify;">Na decomposição de uma série temporal, o resíduo (também conhecido como erro ou componente aleatório) é a parte da série que não pode ser explicada pela tendência de longo prazo e pela sazonalidade. Em outras palavras, o resíduo representa as flutuações irregulares e imprevisíveis que não seguem nenhum padrão discernível na série temporal.</p>', unsafe_allow_html = True)
     st.line_chart(resultado.resid)
+
+def teste_estatistico(dados,string_teste):
+    st.subheader('Testes Estatísticos')
+    st.markdown('<p style="text-align: justify;">O teste de Dickey-Fuller Aumentado (ADF), frequentemente implementado na função adfuller do pacote statsmodels em Python, é um teste estatístico utilizado para determinar se uma série temporal é estacionária ou não. Uma série temporal é considerada estacionária quando suas propriedades estatísticas, como média e variância, permanecem constantes ao longo do tempo. Em outras palavras, não há padrões sistemáticos ou tendências discerníveis na série que afetem sua média ou variância.</p>', unsafe_allow_html = True)
+
+    st.markdown(f'<p style="text-align: justify;"><span style="font-weight: bold">{string_teste}</span></p>', unsafe_allow_html = True)
+    # Realizar o teste de Dickey-Fuller Aumentado
+    resultado_adf = adfuller(dados)
+    st.markdown(f'<p style="text-align: justify;">Estatística do teste ADF: {resultado_adf[0]}.</p>', unsafe_allow_html = True)
+    st.markdown(f'<p style="text-align: justify;">Valor-p: {resultado_adf[1]}.</p>', unsafe_allow_html = True)
+    st.markdown(f'<p style="text-align: justify;">Valores críticos:</p>', unsafe_allow_html = True)
+    for chave, valor in resultado_adf[4].items():
+        st.markdown(f'<p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{chave}: {valor}.</p>', unsafe_allow_html = True)
+    st.markdown('<p style="text-align: justify;">Se o valor-p for menor que o nível de significância escolhido (geralmente 0.05), rejeitamos a hipótese nula e concluímos que a série é estacionária. Caso contrário, não rejeitamos a hipótese nula e inferimos que a série não é estacionária. Isso significa que a série possui tendência.</p>', unsafe_allow_html = True)
+    # Interpretar o resultado do teste
+    if resultado_adf[1] < 0.05:
+        st.markdown(f'<p style="text-align: justify;">Dessa forma, a série temporal é estacionária (rejeitamos a hipótese nula).</p>', unsafe_allow_html = True)
+    else:
+        st.markdown(f'<p style="text-align: justify;">Dessa forma, a série temporal não é estacionária (falhamos em rejeitar a hipótese nula).</p>', unsafe_allow_html = True)
+
+    st.subheader('Gráficos de autocorrelação')
+    st.markdown(f'<p style="text-align: justify;">Para identificar a presença de sazonalidade nos gráficos de autocorrelação simples (ACF) e autocorrelação parcial (PACF), é possível procurar padrões de picos significativos em intervalos regulares.</p>', unsafe_allow_html = True)
+    st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Simples (ACF):</span> os picos indicam a correlação entre a série temporal atual e suas observações passadas em vários lags. Se houver picos significativos em intervalos regulares, isso sugere a presença de sazonalidade na série temporal.</p>', unsafe_allow_html = True)
+    st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Parcial (PACF):</span> os picos representam a correlação entre a série temporal atual e suas observações passadas, removendo o efeito das observações intermediárias. Picos significativos em intervalos regulares no PACF também indicam a presença de sazonalidade.</p>', unsafe_allow_html = True)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        fig, ax = plt.subplots()
+        plot_acf(dados, ax=ax)
+        plt.xlabel('Lag')
+        plt.ylabel('ACF')
+        plt.title('Função de Autocorrelação (ACF)')
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
+    with col2:
+        fig, ax = plt.subplots()
+        plot_pacf(dados, ax=ax)
+        plt.xlabel('Lag')
+        plt.ylabel('PACF')
+        plt.title('Função de Autocorrelação (PACF)')
+        fig.patch.set_alpha(0)
+        st.pyplot(fig)
 
 @st.cache_resource
 def modelo_ets(dados, qt_dias):
