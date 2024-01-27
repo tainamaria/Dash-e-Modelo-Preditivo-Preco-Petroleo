@@ -24,7 +24,7 @@ if (modelo == 'Multiplicativo' and formato == '1'):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade diária:</span> dados diários definido com period=1.</p>', unsafe_allow_html = True)
     result_mult_diaria = seasonal_decompose(dados, period = 1, model='multiplicative')
     decomposicao(dados,result_mult_diaria)
-    string_teste = 'Segue o resultado referente aos dados diários do preço do petróleo:'
+    string_teste = 'Resultado referente aos dados diários do preço do petróleo:'
     teste_estatistico(dados,string_teste)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Séries Temporais Diárias:</span> Para séries temporais diárias, podem ser observados lags significativos no ACF e PACF em torno de múltiplos de 7 (uma semana), indicando padrões semanais de autocorrelação devido a comportamentos repetitivos que ocorrem a cada semana. Além disso, para séries temporais diárias, também podem ser observados lags significativos em torno de 30 (um mês), indicando padrões mensais de autocorrelação.</p>', unsafe_allow_html = True)
 
@@ -34,7 +34,7 @@ elif (modelo == 'Aditivo' and formato == '1'):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade diária:</span> dados diários definido com period=1.</p>', unsafe_allow_html = True)
     result_adit_diaria = seasonal_decompose(dados, period = 1, model='aditive')
     decomposicao(dados,result_adit_diaria)   
-    string_teste = 'Segue o resultado referente aos dados diários do preço do petróleo:'
+    string_teste = 'Resultado referente aos dados diários do preço do petróleo:'
     teste_estatistico(dados,string_teste)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Séries Temporais Diárias:</span> Para séries temporais diárias, podem ser observados lags significativos no ACF e PACF em torno de múltiplos de 7 (uma semana), indicando padrões semanais de autocorrelação devido a comportamentos repetitivos que ocorrem a cada semana. Além disso, para séries temporais diárias, também podem ser observados lags significativos em torno de 30 (um mês), indicando padrões mensais de autocorrelação.</p>', unsafe_allow_html = True)
 
@@ -44,7 +44,7 @@ elif (modelo == 'Multiplicativo' and formato == '7'):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade semanal:</span> dados diários definido period=7.</p>', unsafe_allow_html = True)
     result_mult_diaria = seasonal_decompose(dados, period = 7, model='multiplicative')
     decomposicao(dados,result_mult_diaria)
-    string_teste = 'Segue o resultado referente a média semanal do preço do petróleo:'
+    string_teste = 'Resultado referente a média semanal do preço do petróleo:'
     teste_estatistico(df_semanal,string_teste)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Séries Temporais Semanais:</span> Para séries temporais semanais, podem ser observados lags significativos no ACF e PACF em torno de múltiplos de 4 (um mês), indicando padrões mensais de autocorrelação. Além disso, lags em torno de 52 (um ano) podem ser observados para capturar padrões anuais de autocorrelação.</p>', unsafe_allow_html = True)
 
@@ -54,7 +54,7 @@ elif (modelo == 'Aditivo' and formato == '7'):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade semanal:</span> dados diários definido period=7.</p>', unsafe_allow_html = True)
     result_adit_diaria = seasonal_decompose(dados, period = 7, model='aditive')
     decomposicao(dados,result_adit_diaria)
-    string_teste = 'Segue o resultado referente a média semanal do preço do petróleo:'
+    string_teste = 'Resultado referente a média semanal do preço do petróleo:'
     teste_estatistico(df_semanal,string_teste)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Séries Temporais Semanais:</span> Para séries temporais semanais, podem ser observados lags significativos no ACF e PACF em torno de múltiplos de 4 (um mês), indicando padrões mensais de autocorrelação. Além disso, lags em torno de 52 (um ano) podem ser observados para capturar padrões anuais de autocorrelação.</p>', unsafe_allow_html = True)
 
@@ -64,7 +64,7 @@ elif (modelo == 'Multiplicativo' and formato == '30'):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade mensal:</span> dados diários definido period=30.</p>', unsafe_allow_html = True)
     result_mult_diaria = seasonal_decompose(dados, period = 30, model='multiplicative')
     decomposicao(dados,result_mult_diaria)
-    string_teste = 'Segue o resultado referente a média mensal do preço do petróleo:'
+    string_teste = 'Resultado referente a média mensal do preço do petróleo:'
     teste_estatistico(df_mensal,string_teste)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Séries Temporais Mensais:</span> Para séries temporais mensais, lags em torno de 12 (um ano) podem ser frequentemente ressaltados no ACF e PACF, indicando padrões anuais de autocorrelação. Além disso, para séries mensais, também podem ser observados lags em torno de 6 (meio ano) devido a sazonalidades semestrais.</p>', unsafe_allow_html = True)
 
@@ -74,7 +74,7 @@ elif (modelo == 'Aditivo' and formato == '30'):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade mensal:</span> dados diários definido period=30.</p>', unsafe_allow_html = True)
     result_adit_diaria = seasonal_decompose(dados, period = 30, model='aditive')
     decomposicao(dados,result_adit_diaria) 
-    string_teste = 'Segue o resultado referente a média mensal do preço do petróleo:'
+    string_teste = 'Resultado referente a média mensal do preço do petróleo:'
     teste_estatistico(df_mensal,string_teste)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Séries Temporais Mensais:</span> Para séries temporais mensais, lags em torno de 12 (um ano) podem ser frequentemente ressaltados no ACF e PACF, indicando padrões anuais de autocorrelação. Além disso, para séries mensais, também podem ser observados lags em torno de 6 (meio ano) devido a sazonalidades semestrais.</p>', unsafe_allow_html = True)
 
@@ -84,7 +84,7 @@ elif (modelo == 'Multiplicativo' and formato == '365'):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade anual:</span> dados diários definido period=365.</p>', unsafe_allow_html = True)
     result_mult_diaria = seasonal_decompose(dados, period = 365, model='multiplicative')
     decomposicao(dados,result_mult_diaria)
-    string_teste = 'Segue o resultado referente a média anual do preço do petróleo:'
+    string_teste = 'Resultado referente a média anual do preço do petróleo:'
     teste_estatistico(df_anual,string_teste)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Séries Temporais Anuais:</span> Para séries temporais anuais, podem ser observados lags em torno de 1 (um ano) no ACF e PACF, indicando autocorrelação anual. Além disso, podem ser observados lags em torno de 5 (cinco anos) para capturar padrões de autocorrelação de longo prazo. </p>', unsafe_allow_html = True)
 
@@ -94,7 +94,7 @@ elif (modelo == 'Aditivo' and formato == '365'):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade anual:</span> dados diários definido period=365.</p>', unsafe_allow_html = True)
     result_adit_diaria = seasonal_decompose(dados, period = 365, model='aditive')
     decomposicao(dados,result_adit_diaria)
-    string_teste = 'Segue o resultado referente a média anual do preço do petróleo:'
+    string_teste = 'Resultado referente a média anual do preço do petróleo:'
     teste_estatistico(df_anual,string_teste)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Séries Temporais Anuais:</span> Para séries temporais anuais, podem ser observados lags em torno de 1 (um ano) no ACF e PACF, indicando autocorrelação anual. Além disso, podem ser observados lags em torno de 5 (cinco anos) para capturar padrões de autocorrelação de longo prazo. </p>', unsafe_allow_html = True)
 

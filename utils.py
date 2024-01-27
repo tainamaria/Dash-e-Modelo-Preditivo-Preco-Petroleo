@@ -7,7 +7,6 @@ from datetime import timedelta
 import plotly.graph_objects as go
 import time
 import numpy as np
-# from pmdarima.arima import auto_arima
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 # import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
@@ -81,19 +80,19 @@ def teste_estatistico(dados,string_teste):
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Simples (ACF):</span> os picos indicam a correlação entre a série temporal atual e suas observações passadas em vários lags. Se houver picos significativos em intervalos regulares, isso sugere a presença de sazonalidade na série temporal.</p>', unsafe_allow_html = True)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Parcial (PACF):</span> os picos representam a correlação entre a série temporal atual e suas observações passadas, removendo o efeito das observações intermediárias. Picos significativos em intervalos regulares no PACF também indicam a presença de sazonalidade.</p>', unsafe_allow_html = True)
     
-    # col1, col2 = st.columns(2)
-    # with col1:
-    #     fig = plot_acf(dados, ax=ax)#plot_acf(dados, lags=30, title = 'Autocorrelação Simples (ACF)')
-    #     # st.set_option('deprecation.showPyplotGlobalUse', False)
-    #     # st.pyplot(fig.set_facecolor('none'))
-    #     st.plotly_chart(fig)
-    #     # st.pyplot(fig)
-    # with col2:
-    #     fig = plot_pacf(dados, lags=30, title = 'Autocorrelação Parcial (PACF)')
-    #     # st.set_option('deprecation.showPyplotGlobalUse', False)
-    #     # st.pyplot(fig.set_facecolor('none'))
-    #     st.plotly_chart(fig)
-    #     # st.pyplot(fig)
+    col1, col2 = st.columns(2)
+    with col1:
+        fig = plot_acf(dados, lags=30, title = 'Autocorrelação Simples (ACF)')
+        # st.set_option('deprecation.showPyplotGlobalUse', False)
+        # st.pyplot(fig.set_facecolor('none'))
+        st.pyplot(fig)
+        # st.pyplot(fig)
+    with col2:
+        fig = plot_pacf(dados, lags=30, title = 'Autocorrelação Parcial (PACF)')
+        # st.set_option('deprecation.showPyplotGlobalUse', False)
+        # st.pyplot(fig.set_facecolor('none'))
+        st.pyplot(fig)
+        # st.pyplot(fig)
 
     # col1, col2 = st.columns(2)
     # with col1:
@@ -113,6 +112,9 @@ def teste_estatistico(dados,string_teste):
     #     fig.patch.set_alpha(0)
     #     st.pyplot(fig)
 
+def wmape(y_true, y_pred):
+  return np.abs(y_true-y_pred).sum() / np.abs(y_true).sum() #se fosse fazer MAPE não usariamos o abs
+
 @st.cache_resource
 def modelo_ets(dados, qt_dias):
   dados = dados.tail(qt_dias)
@@ -128,7 +130,9 @@ def modelo_ets(dados, qt_dias):
 
   # Inicializando as variáveis para armazenar os melhores resultados
   melhor_mae = float('inf')
+  melhor_wmape = float('inf')
   melhores_parametros = None
+  df_completo = pd.DataFrame(columns=['Qtd dias treinados', 'Qtd dias testados', 'MAE', 'WMAPE', 'Tendência', 'Sazonalidade', 'Períodos Sazonais'])
 
   # Loop através dos parâmetros
   for trend in parametros_grid['trend']:
@@ -150,6 +154,17 @@ def modelo_ets(dados, qt_dias):
                   # Calculando o MAE
                   mae = mean_absolute_error(dados_teste['Preco'].values, previsao)
 
+                  wmape_teste = wmape(dados_teste['Preco'].reset_index(drop=True), previsao.reset_index(drop=True)) 
+
+                  # Dados para adicionar como nova linha
+                  nova_linha = {'Qtd dias treinados': len(dados_treino), 'Qtd dias testados': len(dados_teste), 'MAE': mae, 'WMAPE': f'{wmape_teste:.2%}', 'Tendência': trend, 'Sazonalidade': seasonal, 'Períodos Sazonais': seasonal_periods}
+                  
+                  # Criando um novo DataFrame com a nova linha
+                  nova_linha_df = pd.DataFrame([nova_linha])
+                  
+                  # Adicionando nova linha ao DataFrame original usando concatenação
+                  df_completo = pd.concat([df_completo, nova_linha_df], ignore_index=True)
+
               # Atualizando os melhores parâmetros se este conjunto tiver um MAE menor
               if mae < melhor_mae:
                   melhor_mae = mae
@@ -157,29 +172,23 @@ def modelo_ets(dados, qt_dias):
                   melhores_dados_treinamento = dados_treino
                   melhores_dados_teste = dados_teste
                   melhor_resultado_fit = resultado
+                  melhor_wmape = wmape_teste
 
-  return melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, melhor_resultado_fit
+  return melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, melhor_resultado_fit, melhor_wmape,df_completo
 
-# @st.cache_resource
-# def modelo_arima(dados,qt_dias_previsao):
-#     dados = dados.tail(365) # Últimos 365 anos
-#     # Dividir os dados em treino e teste
-#     dados_treino = dados.iloc[:-qt_dias_previsao]  # Treinamento: todos os dados exceto os últimos qt_dias_previsao dias
-#     dados_teste = dados.iloc[-qt_dias_previsao:]   # Teste: últimos qt_dias_previsao dias
+def modelo_ets_previsao(dados, qt_dias_historico, qt_dias_prever, trend,seasonal):
+    dados = dados.tail(qt_dias_historico)
+  
+    # Criando o modelo ETS
+    modelo_ets = ExponentialSmoothing(dados['Preco'], trend=trend, seasonal=seasonal, seasonal_periods=30)
+    
+    # Treinando o modelo
+    resultado = modelo_ets.fit()
 
-#     # Ajustar o modelo ARIMA usando auto_arima
-#     modelo_arima_teste = auto_arima(dados_treino['Preco'], seasonal=False, trace=True) 
+    # Fazendo previsões
+    previsao = resultado.forecast(steps=qt_dias_prever)
 
-#     # Fazer a previsão dos próximos qt_dias_previsao dias
-#     previsao = modelo_arima_teste.predict(n_periods=qt_dias_previsao)
-
-#     # Calcular o erro MAE para a previsão
-#     melhor_mae = mean_absolute_error(dados_teste['Preco'], previsao)
-
-#     # Ajustar modelo para os últimos dias
-#     modelo_arima= auto_arima(dados['Preco'], seasonal=False, trace=True) 
-
-#     return melhor_mae, dados_teste, dados_treino, modelo_arima_teste, modelo_arima
+    return previsao
 
 # Gráfico de comparação entre os dados históricos, testados e previstos
 def graf_comparativo(dados_historicos_x,dados_historicos_y,dados_testados_x,dados_testados_y,dados_previstos_x,dados_previstos_y,titulo):
@@ -201,6 +210,23 @@ def graf_comparativo(dados_historicos_x,dados_historicos_y,dados_testados_x,dado
   showline=True, linewidth=1, linecolor='black')
   return fig
 
+# Gráfico de comparação entre duas colunas
+def graf_duas_linhas(dados_testados_x,dados_testados_y,titulo):
+    fig = go.Figure()
+    # Dados testados
+    fig.add_trace(go.Scatter(x = dados_testados_x, y = dados_testados_y, name = 'Dados testados'))
+
+    fig.update_layout(title= titulo,
+    xaxis_title='Data',
+    yaxis_title='Preço (US$)',
+    font = {'family': 'Arial','size': 16,'color': 'black'})
+    fig.update_xaxes( showgrid=True, gridwidth=1, gridcolor='lightgray',
+    showline=True, linewidth=1, linecolor='black')
+    fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='lightgray',
+    showline=True, linewidth=1, linecolor='black')
+  
+    return fig
+
 # Futuros dias úteis da semana
 def dias_uteis_futuros(data_inicial,qtd_dias):
   dias_uteis = []
@@ -210,59 +236,7 @@ def dias_uteis_futuros(data_inicial,qtd_dias):
       if data_inicial.weekday() not in [5, 6]:
           dias_uteis.append(data_inicial)
   return dias_uteis
-
-cor_estilizada = 'color: #0145AC;'
-fonte_negrito = 'font-weight: bold;'
-
-def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros,df_forecasting,qt_dias_previsao):
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        metric1 = melhores_dados_treinamento.index.min().strftime('%d/%m/%Y')
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric1}</h2> <span style='{fonte_negrito}'> Data inicial da análise </span>", unsafe_allow_html=True)
-        metric2 = melhor_mae.round(2)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric2}</h2> <span style='{fonte_negrito}'> MAE </span>", unsafe_allow_html=True)
-    with col2:
-        metric3 = melhores_dados_teste.index.max().strftime('%d/%m/%Y')
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric3}</h2> <span style='{fonte_negrito}'> Data final da análise </span>", unsafe_allow_html=True)
-        metric4 = melhores_parametros['trend']
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric4}</h2> <span style='{fonte_negrito}'> Tendência </span>", unsafe_allow_html=True)
-    with col3:
-        metric5 = len(melhores_dados_treinamento)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric5}</h2> <span style='{fonte_negrito}'> Qtd dias treinados </span>", unsafe_allow_html=True)
-        metric6 = melhores_parametros['seasonal']
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric6}</h2> <span style='{fonte_negrito}'> Sazonalidade </span>", unsafe_allow_html=True)
-    with col4:
-        metric7 = len(melhores_dados_teste)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric7}</h2> <span style='{fonte_negrito}'> Qtd dias testados </span>", unsafe_allow_html=True)
-        metric8 = melhores_parametros['seasonal_periods']
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric8}</h2> <span style='{fonte_negrito}'> Períodos Sazonais </span>", unsafe_allow_html=True)
-
-    st.markdown("<div style='height: 30px;'></div>", unsafe_allow_html=True)   
-    st.markdown(f'<h3> Dados da previsão - Próximos {qt_dias_previsao} dias</h3>', unsafe_allow_html = True)
-
-    df_forecasting['Data'] = pd.to_datetime(df_forecasting['Data'], format = '%d/%m/%Y')
-    df_forecasting.set_index('Data', inplace = True)
-
-    preco_min = df_forecasting['Preco'].min()
-    data_preco_min = df_forecasting[df_forecasting['Preco']==preco_min].index
-
-    preco_max = df_forecasting['Preco'].max()
-    data_preco_max = df_forecasting[df_forecasting['Preco']==preco_max].index
-
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        metric9 = data_preco_max[0].strftime('%d/%m/%Y')
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric9}</h2> <span style='{fonte_negrito}'> Data prevista de maior pico </span>", unsafe_allow_html=True)
-    with col2:
-        metric10 = preco_max.round(2)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric10}</h2> <span style='{fonte_negrito}'> Valor do maior pico </span>", unsafe_allow_html=True)
-    with col3:
-        metric11 = data_preco_min[0].strftime('%d/%m/%Y')
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric11}</h2> <span style='{fonte_negrito}'> Data prevista de menor pico </span>", unsafe_allow_html=True)
-    with col4:
-        metric12 = preco_min.round(2)
-        st.markdown(f"<h2 style='{cor_estilizada}'>{metric12}</h2> <span style='{fonte_negrito}'> Valor do menor pico </span>", unsafe_allow_html=True)
-
+    
 # def colunas_arima(melhor_mae, dados_teste, dados_treino, modelo_arima_teste, df_forecasting, qt_dias_previsao):
 #     col1, col2, col3, col4 = st.columns(4)
 #     with col1:
