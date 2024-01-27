@@ -9,7 +9,7 @@ import time
 import numpy as np
 # from pmdarima.arima import auto_arima
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
 
 @st.cache_data
@@ -38,12 +38,11 @@ def leitura_csv(arquivo):
     dados.sort_index(ascending=True, inplace=True)
     return dados
 
-# def atualiza_dados():
-#     if st.sidebar.button("###### Clique para atualização dos dados da aplicação"):
-#         # Limpa o cache de dados
-#         st.cache_data.clear()
-#         st.cache_resource.clear()
-
+def atualiza_dados():
+    if st.sidebar.button("###### Clique para atualizar os dados da aplicação"):
+        # Limpa o cache de dados
+        st.cache_data.clear()
+        st.cache_resource.clear()
 
 def decomposicao(dados,resultado):
     st.subheader('Série Temporal Original')
