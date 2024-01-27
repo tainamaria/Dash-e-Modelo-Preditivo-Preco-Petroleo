@@ -9,7 +9,7 @@ import time
 import numpy as np
 # from pmdarima.arima import auto_arima
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
 
 @st.cache_data
@@ -78,9 +78,18 @@ def teste_estatistico(dados,string_teste):
 
     st.subheader('Gráficos de autocorrelação')
     st.markdown(f'<p style="text-align: justify;">Para identificar a presença de sazonalidade nos gráficos de autocorrelação simples (ACF) e autocorrelação parcial (PACF), é possível procurar padrões de picos significativos em intervalos regulares.</p>', unsafe_allow_html = True)
-    st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Simples (ACF):</span> os picos indicam a correlação entre a série temporal atual e suas observações passadas em vários lags. Se houver picos significativos em intervalos regulares, isso sugere a presença de sazonalidade na série temporal.</p>', unsafe_allow_html = True)
-    st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Parcial (PACF):</span> os picos representam a correlação entre a série temporal atual e suas observações passadas, removendo o efeito das observações intermediárias. Picos significativos em intervalos regulares no PACF também indicam a presença de sazonalidade.</p>', unsafe_allow_html = True)
-
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        fig = plot_acf(dados, lags=30)
+        st.set_option('deprecation.showPyplotGlobalUse', False)
+        st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Simples (ACF):</span> os picos indicam a correlação entre a série temporal atual e suas observações passadas em vários lags. Se houver picos significativos em intervalos regulares, isso sugere a presença de sazonalidade na série temporal.</p>', unsafe_allow_html = True)
+        st.pyplot(fig.set_facecolor('none'))
+    with col2:
+        fig = plot_pacf(dados, lags=30)
+        st.set_option('deprecation.showPyplotGlobalUse', False)
+        st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Autocorrelação Parcial (PACF):</span> os picos representam a correlação entre a série temporal atual e suas observações passadas, removendo o efeito das observações intermediárias. Picos significativos em intervalos regulares no PACF também indicam a presença de sazonalidade.</p>', unsafe_allow_html = True)
+        st.pyplot(fig.set_facecolor('none'))
     # col1, col2 = st.columns(2)
     # with col1:
     #     fig, ax = plt.subplots()
