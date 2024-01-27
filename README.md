@@ -17,7 +17,7 @@
 <a href="https://imgbox.com/YOjgt7zl" target="_blank"><img src="https://thumbs2.imgbox.com/cb/90/YOjgt7zl_t.png" alt="image host"/></a> 
 <a href="https://imgbox.com/2mF1oLMP" target="_blank"><img src="https://thumbs2.imgbox.com/f9/a1/2mF1oLMP_t.png" alt="image host"/></a>
 
-<h2> :books: Bibliotecas Python</h2>
+<h2> :books: Bibliotecas Python utilizadas</h2>
 <ul>
   <li>Streamlit</li>
    <li>Plotly</li>
