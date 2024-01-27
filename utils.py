@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 import time
 import numpy as np
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
 
 @st.cache_data
