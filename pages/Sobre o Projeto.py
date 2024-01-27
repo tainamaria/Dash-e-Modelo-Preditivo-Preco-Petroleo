@@ -14,8 +14,9 @@ st.markdown('- Fazer deploy do modelo em produção')
 
 #Visualização da fluxo de trabalho do projeto
 st.markdown('## Fluxo de Trabalho')
-miro_url = 'https://miro.com/app/live-embed/uXjVN1YW9H4=/?moveToViewport=-1291,-645,2580,1288&embedId=482323719511'
-st.markdown(f'<iframe width="80%" height="600" src="{miro_url}" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>', unsafe_allow_html=True)
+miro_url = 'https://miro.com/app/live-embed/uXjVN1YW9H4=/?moveToViewport=-1349,-868,3306,1721&embedId=214115551426'
+st.markdown(f'<iframe width="768" height="432" src="{miro_url}" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>', unsafe_allow_html=True)
+
 
 #Links
 st.markdown('## Links Úteis')
