@@ -1,23 +1,28 @@
+#Importação das bibliotecas
 import streamlit as st
 import pandas as pd
 import numpy as np
 from utils import leitura_csv,webscraping,graf_marcado_multiplos,atualiza_dados
 
+#Configuração da página
 st.set_page_config(page_title= 'Dashboard - Destaques', layout='wide', page_icon= ':fuelpump:')
-### Insights
+
 st.title('Destaques 🕵️‍♀️')
 st.markdown('<p style="text-align: justify;">O Dólar exerce uma influência significativa na flutuação dos preços do barril de petróleo. O gráfico abaixo mostra a variação do preço do barril e da taxa de câmbio Dólar-Real ao longo do tempo, destacando os principais picos e vales nos preços desse período.</p>', unsafe_allow_html = True)
 
+#Webscraping
 url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?serid=38590&module=M'
 coluna = 'Taxa'
 dados_taxa = webscraping(url,coluna)
 
+#Preparação da base de dados
 arquivo = 'dados_preco_petroleo.csv'
 dados_preco = leitura_csv(arquivo)
 
 df_merged = pd.merge(dados_preco, dados_taxa, left_index=True, right_index=True, how='left')
 df_merged.Taxa = df_merged.Taxa/100
 
+#Preparação do gráfico
 x = df_merged.index
 y = df_merged.Preco
 y2 = df_merged.Taxa
@@ -26,7 +31,7 @@ picos_indices_max = np.where(((y == 143.95) & (x =='2008-07-07')) | ((y == 126.6
 picos_indices_min = np.where(((y == 33.73) & (x =='2008-12-30')) | ((y == 26.01) & (x == '2016-01-24')) | ((y == 9.12) & (x == '2020-04-21')))[0] 
 st.plotly_chart(graf_marcado_multiplos(x, y, picos_indices_max, picos_indices_min,y2), use_container_width=True)
 
-#Altas
+#Altas e baixas históricas no preço
 st.markdown('<h3> Principais fatos históricos que afetaram os preços: </h3>', unsafe_allow_html = True)
 
 st.markdown('<p style="text-align: justify;"><span style="color:red; font-weight: bold">Julho/2008:</span> o fato que culmina no pico de preço do barril de petróleo nesse período, vem acompanhado de uma curva crescente desde o ano de 2004, com instabilidade geopolítica, crescimento da demanda global, especulação no mercado financeiro. Em 2005, por exemplo, o evento climático do furacão Katrina causou danos significativos às instalações de produção de petróleo e gás no Golfo do México, afetando a oferta. Tensões geopolíticas em regiões chave de produção de petróleo, como o Oriente Médio, também contribuíram para a preocupação com a segurança no fornecimento. Eventos como a tensão entre os Estados Unidos e o Irã, assim como conflitos em regiões produtoras, geraram incertezas que influenciaram nos crescentes preços do petróleo.</p>', unsafe_allow_html = True)

@@ -90,9 +90,3 @@ with col2:
     st.plotly_chart(fig_media_mensal_anos, use_container_width=True)
     st.divider()
     st.plotly_chart(fig_vales_preco, use_container_width=True)    
-
-
-#ESTRESSAR todos os filtros em TODAS AS PÁGINAS - ******** PENDENTE ********
-
-    
-
