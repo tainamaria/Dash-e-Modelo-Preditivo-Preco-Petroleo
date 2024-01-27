@@ -83,6 +83,21 @@ def teste_estatistico(dados,string_teste):
     
     # col1, col2 = st.columns(2)
     # with col1:
+    #     fig = plot_acf(dados, ax=ax)#plot_acf(dados, lags=30, title = 'Autocorrelação Simples (ACF)')
+    #     # st.set_option('deprecation.showPyplotGlobalUse', False)
+    #     # st.pyplot(fig.set_facecolor('none'))
+    #     st.plotly_chart(fig)
+    #     # st.pyplot(fig)
+    # with col2:
+    #     fig = plot_pacf(dados, lags=30, title = 'Autocorrelação Parcial (PACF)')
+    #     # st.set_option('deprecation.showPyplotGlobalUse', False)
+    #     # st.pyplot(fig.set_facecolor('none'))
+    #     st.plotly_chart(fig)
+    #     # st.pyplot(fig)
+    st.pyplot(plot_acf(dados))
+
+    # col1, col2 = st.columns(2)
+    # with col1:
     #     fig, ax = plt.subplots()
     #     plot_acf(dados, ax=ax)
     #     plt.xlabel('Lag')

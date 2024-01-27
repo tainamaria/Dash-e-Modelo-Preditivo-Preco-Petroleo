@@ -1,6 +1,7 @@
 import streamlit as st
 import platform
 
+st.title('Verificar bibliotecas instaladas em produção')
 # Obtém a versão do Python
 python_version = platform.python_version()
 
