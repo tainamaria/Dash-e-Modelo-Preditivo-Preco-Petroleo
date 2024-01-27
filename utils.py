@@ -38,11 +38,11 @@ def leitura_csv(arquivo):
     dados.sort_index(ascending=True, inplace=True)
     return dados
 
-def atualiza_dados():
-    if st.sidebar.button("###### Clique para atualização dos dados da aplicação"):
-        # Limpa o cache de dados
-        st.cache_data.clear()
-        st.cache_resource.clear()
+# def atualiza_dados():
+#     if st.sidebar.button("###### Clique para atualização dos dados da aplicação"):
+#         # Limpa o cache de dados
+#         st.cache_data.clear()
+#         st.cache_resource.clear()
 
 
 def decomposicao(dados,resultado):
