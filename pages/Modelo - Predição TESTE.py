@@ -1,7 +1,8 @@
 ## IMPORTAÇÃO ARQUIVOS
 import streamlit as st
 import pandas as pd
-# from utils import leitura_csv,modelo_ets,graf_comparativo,dias_uteis_futuros,colunas_ets,gerar_conteudo_download,mensagem_sucesso
+from utils import leitura_csv
+# ,modelo_ets,graf_comparativo,dias_uteis_futuros,colunas_ets,gerar_conteudo_download,mensagem_sucesso
 
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
 st.title('Modelo Preditivo :telescope:')
@@ -14,8 +15,8 @@ st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">ETS
 algoritmo = st.sidebar.selectbox("Selecione o algoritmo", ['ETS','ARIMA'])
 
 ## LEITURA DOS DADOS DO ARQUIVO GRAVADO
-# arquivo = 'dados_preco_petroleo.csv'
-# dados = leitura_csv(arquivo)
+arquivo = 'dados_preco_petroleo.csv'
+dados = leitura_csv(arquivo)
 
 # qt_dias_previsao = 30
 
