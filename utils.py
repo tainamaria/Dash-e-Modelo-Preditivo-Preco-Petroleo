@@ -7,6 +7,7 @@ from datetime import timedelta
 import plotly.graph_objects as go
 import time
 import numpy as np
+from pmdarima.arima import auto_arima
 
 @st.cache_data
 def webscraping(url,coluna):
@@ -33,6 +34,13 @@ def leitura_csv(arquivo):
     dados.set_index('Data', inplace = True)
     dados.sort_index(ascending=True, inplace=True)
     return dados
+
+def atualiza_dados():
+    if st.sidebar.button("###### Clique para atualização dos dados da aplicação"):
+        # Limpa o cache de dados
+        st.cache_data.clear()
+        st.cache_resource.clear()
+
 
 def decomposicao(dados,resultado):
     st.subheader('Série Temporal Original')
@@ -89,12 +97,28 @@ def modelo_ets(dados, qt_dias):
                   melhores_dados_teste = dados_teste
                   melhor_resultado_fit = resultado
 
-  # Imprimindo os melhores parâmetros e o MAE correspondente
-  print(f'Melhores Parâmetros: {melhores_parametros}')
-  print(f'MAE para os melhores parâmetros: {melhor_mae}')
-  print(f'MAE para os melhor treino: {len(melhores_dados_treinamento)}')
-  print(f'MAE para os melhor teste: {len(melhores_dados_teste)}')
   return melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, melhor_resultado_fit
+
+@st.cache_resource
+def modelo_arima(dados,qt_dias_previsao):
+    dados = dados.tail(365) # Últimos 365 anos
+    # Dividir os dados em treino e teste
+    dados_treino = dados.iloc[:-qt_dias_previsao]  # Treinamento: todos os dados exceto os últimos qt_dias_previsao dias
+    dados_teste = dados.iloc[-qt_dias_previsao:]   # Teste: últimos qt_dias_previsao dias
+
+    # Ajustar o modelo ARIMA usando auto_arima
+    modelo_arima_teste = auto_arima(dados_treino['Preco'], seasonal=False, trace=True) 
+
+    # Fazer a previsão dos próximos qt_dias_previsao dias
+    previsao = modelo_arima_teste.predict(n_periods=qt_dias_previsao)
+
+    # Calcular o erro MAE para a previsão
+    melhor_mae = mean_absolute_error(dados_teste['Preco'], previsao)
+
+    # Ajustar modelo para os últimos dias
+    modelo_arima= auto_arima(dados['Preco'], seasonal=False, trace=True) 
+
+    return melhor_mae, dados_teste, dados_treino, modelo_arima_teste, modelo_arima
 
 # Gráfico de comparação entre os dados históricos, testados e previstos
 def graf_comparativo(dados_historicos_x,dados_historicos_y,dados_testados_x,dados_testados_y,dados_previstos_x,dados_previstos_y,titulo):
@@ -126,7 +150,7 @@ def dias_uteis_futuros(data_inicial,qtd_dias):
           dias_uteis.append(data_inicial)
   return dias_uteis
 
-def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros):
+def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melhores_parametros,df_forecasting,qt_dias_previsao):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric('Data inicial da análise', melhores_dados_treinamento.index.min().strftime('%d/%m/%Y'))
@@ -141,18 +165,62 @@ def colunas_ets(melhores_dados_teste,melhores_dados_treinamento,melhor_mae,melho
         st.metric('Qtd dias testados', len(melhores_dados_teste))
         st.metric('Períodos Sazonais', melhores_parametros['seasonal_periods'])
     
-    st.markdown('<h3> Dados da previsão - Próximos 60 dias</h3>', unsafe_allow_html = True)
+    st.markdown(f'<h3> Dados da previsão - Próximos {qt_dias_previsao} dias</h3>', unsafe_allow_html = True)
+
+    df_forecasting['Data'] = pd.to_datetime(df_forecasting['Data'], format = '%d/%m/%Y')
+    df_forecasting.set_index('Data', inplace = True)
+
+    preco_min = df_forecasting['Preco'].min()
+    data_preco_min = df_forecasting[df_forecasting['Preco']==preco_min].index
+
+    preco_max = df_forecasting['Preco'].max()
+    data_preco_max = df_forecasting[df_forecasting['Preco']==preco_max].index
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric('Data prevista de maior pico', 'xpto')
+        st.metric('Data prevista de maior pico', data_preco_max[0].strftime('%d/%m/%Y'))
     with col2:
-        st.metric('Valor do maior pico','xpto')
+        st.metric('Valor do maior pico', preco_max.round(2))
     with col3:
-        st.metric('Data prevista de menor pico', 'xpto')
+        st.metric('Data prevista de menor pico', data_preco_min[0].strftime('%d/%m/%Y'))
     with col4:
-        st.metric('Valor do menor pico','xpto')
+        st.metric('Valor do menor pico', preco_min.round(2))
+
+def colunas_arima(melhor_mae, dados_teste, dados_treino, modelo_arima_teste, df_forecasting, qt_dias_previsao):
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric('Data inicial da análise', dados_treino.index.min().strftime('%d/%m/%Y'))
+        st.metric('MAE', melhor_mae.round(2))
+    with col2:
+        st.metric('Data final da análise', dados_teste.index.max().strftime('%d/%m/%Y'))
+        st.metric('p', modelo_arima_teste.order[0])
+    with col3:
+        st.metric('Qtd dias treinados', len(dados_treino))
+        st.metric('d', modelo_arima_teste.order[1])
+    with col4:
+        st.metric('Qtd dias testados', len(dados_teste))
+        st.metric('q', modelo_arima_teste.order[2])
     
+    st.markdown(f'<h3> Dados da previsão - Próximos {qt_dias_previsao} dias</h3>', unsafe_allow_html = True)
+
+    df_forecasting['Data'] = pd.to_datetime(df_forecasting['Data'], format = '%d/%m/%Y')
+    df_forecasting.set_index('Data', inplace = True)
+
+    preco_min = df_forecasting['Preco'].min()
+    data_preco_min = df_forecasting[df_forecasting['Preco']==preco_min].index
+
+    preco_max = df_forecasting['Preco'].max()
+    data_preco_max = df_forecasting[df_forecasting['Preco']==preco_max].index
+
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric('Data prevista de maior pico', data_preco_max[0].strftime('%d/%m/%Y'))
+    with col2:
+        st.metric('Valor do maior pico', preco_max.round(2))
+    with col3:
+        st.metric('Data prevista de menor pico', data_preco_min[0].strftime('%d/%m/%Y'))
+    with col4:
+        st.metric('Valor do menor pico', preco_min.round(2))
 
 def gerar_conteudo_download(dados):
     return dados.to_csv(index = False).encode('utf-8')

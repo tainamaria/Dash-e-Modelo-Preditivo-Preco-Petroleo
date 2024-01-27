@@ -10,10 +10,10 @@ st.markdown('<p style="text-align: justify;"> Na decomposição sazonal de uma s
 st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Decomposição Aditiva:</span> Série temporal modelada como a soma dos componentes de tendência, sazonalidade e resíduos. Útil quando variação sazonal é aproximadamente constante ao longo do tempo.</p>', unsafe_allow_html = True)
 st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Decomposição Multiplicativa:</span> Série temporal modelada como o produto dos componentes de tendência, sazonalidade e resíduos. Útil quando a variação sazonal muda proporcionalmente com o nível da série temporal.</p>', unsafe_allow_html = True)
 st.markdown('<p style="text-align: justify;"> Também é possível decompor os dados de acordo com o número de ciclos completos de sazonalidade (period), este parâmetro é importante porque ajuda a identificar padrões sazonais nos dados:</p>', unsafe_allow_html = True)
-st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Periodo = 1:</span> dados diários, onde definimos period=1 para considerar a sazonalidade diária.</p>', unsafe_allow_html = True)
-st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Periodo = 7:</span> dados diários, onde definimos period=7 para considerar a sazonalidade semanal.</p>', unsafe_allow_html = True)
-st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Periodo = 30:</span> dados diários, onde definimos period=30 para considerar a sazonalidade mensal.</p>', unsafe_allow_html = True)
-st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Periodo = 365:</span> dados diários, onde definimos period=365 para considerar a sazonalidade anual.</p>', unsafe_allow_html = True)
+st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade diária:</span> dados diários definido com period=1.</p>', unsafe_allow_html = True)
+st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade semanal:</span> dados diários definido period=7.</p>', unsafe_allow_html = True)
+st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade mensal:</span> dados diários definido period=30.</p>', unsafe_allow_html = True)
+st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade anual:</span> dados diários definido period=365.</p>', unsafe_allow_html = True)
 
 ## LEITURA DOS DADOS DO ARQUIVO GRAVADO
 arquivo = 'dados_preco_petroleo.csv'
