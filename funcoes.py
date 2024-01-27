@@ -5,12 +5,12 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import TimeSeriesSplit
 from datetime import timedelta
 import plotly.graph_objects as go
-# import time
-# import numpy as np
-# # from pmdarima.arima import auto_arima
-# from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-# import matplotlib.pyplot as plt
-# from statsmodels.tsa.stattools import adfuller
+import time
+import numpy as np
+# from pmdarima.arima import auto_arima
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+import matplotlib.pyplot as plt
+from statsmodels.tsa.stattools import adfuller
 
 # def webscraping(url,coluna):
 #     dados = pd.read_html(url, encoding='utf-8', decimal=',')
