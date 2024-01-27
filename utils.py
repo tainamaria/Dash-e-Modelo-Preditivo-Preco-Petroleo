@@ -9,7 +9,7 @@ import time
 import numpy as np
 # from pmdarima.arima import auto_arima
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-import matplotlib.pyplot as plt
+import matplotlib
 from statsmodels.tsa.stattools import adfuller
 
 @st.cache_data
