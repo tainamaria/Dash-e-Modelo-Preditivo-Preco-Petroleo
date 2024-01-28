@@ -4,11 +4,16 @@ import pandas as pd
 import plotly.express as px
 from utils import webscraping,graf_marcado_max_min,atualiza_dados
 
-#Configuração da página
+# Configuração da página
 st.set_page_config(page_title= 'Dashboard - Preço do Petróleo', layout='wide', page_icon= ':fuelpump:')
+
+# Título da página
 st.title('Dashboard - Variação do Preço do Petróleo :fuelpump:')
+
+# Botão para atualizar os dados da aplicação
 atualiza_dados()
-# Webscraping
+
+# Webscraping dos dados de petróleo
 url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view'
 coluna = 'Preco'
 dados = webscraping(url,coluna)
