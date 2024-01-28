@@ -97,9 +97,3 @@ elif (modelo == 'Aditivo' and formato == '365'):
     string_teste = 'Resultado referente a média anual do preço do petróleo:'
     teste_estatistico(df_anual,string_teste)
     st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Séries Temporais Anuais:</span> Para séries temporais anuais, podem ser observados lags em torno de 1 (um ano) no ACF e PACF, indicando autocorrelação anual. Além disso, podem ser observados lags em torno de 5 (cinco anos) para capturar padrões de autocorrelação de longo prazo. </p>', unsafe_allow_html = True)
-
-
-
-
-
-
