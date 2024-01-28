@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import numpy as np
 from utils import webscraping,graf_marcado_max_min,atualiza_dados
 
 #Configuração da página
