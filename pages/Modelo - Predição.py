@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import pickle
-from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros
+from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros,modelo_ets_previsao
 
 # Configuração da página
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
