@@ -157,9 +157,9 @@ fig.update_layout(title= titulo,
   yaxis_title='Preço (US$)')
 st.plotly_chart(fig, use_container_width=True)
 
-# Visualização do dia e preço previstos
-with st.expander("Visualizar preços previstos"):
-    st.write(df_forecasting.reset_index())
+# # Visualização do dia e preço previstos
+# with st.expander("Visualizar preços previstos"):
+#     st.write(df_forecasting.reset_index())
 
 # Arquivo joblib criado para o modelo de previsão
 # Carregar a função
