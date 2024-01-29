@@ -113,13 +113,14 @@ with col4:
 # Função criada para o modelo de previsão
 forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
-# # Carregar a função do arquivo pickle com o o modelo de previsão
-# with open('modelo_ets.pkl', 'rb') as arquivo:
-#     funcao_carregada = pickle.load(arquivo)
+# Carregar a função do arquivo pickle com o o modelo de previsão
+with open('modelo_ets.pkl', 'rb') as arquivo:
+    modelo_carregado = pickle.load(arquivo)
 
-# forecasting_teste = funcao_carregada(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+forecasting_teste = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
-# forecasting = forecasting_teste
+forecasting = forecasting_teste
+
 # Criação de um data frame para juntar os dados previstos e os dias futuros
 df_forecasting = pd.DataFrame()
 
