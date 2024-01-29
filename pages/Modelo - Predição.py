@@ -117,7 +117,7 @@ forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opc
 # # Carregar a função
 modelo_carregado = joblib.load('modelo_ets.joblib')
 # # Usar a função carregada
-# forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+forecasting_teste = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
 # Criação de um data frame para juntar os dados previstos e os dias futuros
 df_forecasting = pd.DataFrame()
