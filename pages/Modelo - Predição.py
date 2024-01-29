@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import pickle
-from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros,modelo_ets_previsao
+from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros
 
 # Configuração da página
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
@@ -43,7 +43,7 @@ arquivo.close()
 st.header('Melhor Resultado do Treino e Teste')
 
 # Possibilidade de escolher a quantidade de dias que deseja usar no modelo de treino e teste, mínimo de 90 dias
-qt_dias_treino_teste = st.number_input("Escolha a quantidade de dias mais recentes para utilizar no treino e teste do modelo (Número maior que 90):", min_value=90, max_value=len(dados), value=180)
+qt_dias_treino_teste = st.number_input("Escolha a quantidade de dias mais recentes para utilizar no treino e teste do modelo:", min_value=90, max_value=len(dados), value=180)
 st.markdown(f'Resultado destacado com o menor erro alcançado para **{qt_dias_treino_teste} dias** históricos, comparando dados de teste e dados previstos:', unsafe_allow_html = True)
 
 # Função criada para treinar e testar os dados
