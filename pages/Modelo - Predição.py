@@ -37,6 +37,7 @@ dados = leitura_csv(arquivo)
 # Leitura do arquivo pickle com a função do modelo de previsão
 with open('modelo_ets.pkl', 'rb') as arquivo:
     modelo_carregado = pickle.load(arquivo)
+arquivo.close()
 
 # Apresentação do melhor resultado do modelo comparando o erro da base de teste e dados previstos
 st.header('Melhor Resultado do Treino e Teste')
