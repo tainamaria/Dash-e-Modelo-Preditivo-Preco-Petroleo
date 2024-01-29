@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import pickle
-from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros,modelo_ets_previsao
+from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros
 
 # Configuração da página
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
@@ -109,9 +109,7 @@ with col3:
     opcao_tendencia = st.selectbox("Tendência:", ['add', 'additive', 'mul', 'multiplicative'], index=indice_tendencia)
 with col4:
     opcao_sazonalidade = st.selectbox("Sazonalidade:", ['add', 'additive', 'mul', 'multiplicative'], index = indice_sazonalidade)
-# # Função criada para o modelo de previsão
-# forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
-    
+   
 # Carregar a função do pickle criado para o modelo de previsão
 with open('modelo_ets.pkl', 'rb') as arquivo:
     modelo_carregado = pickle.load(arquivo)
@@ -162,15 +160,4 @@ fig.update_layout(title= titulo,
   xaxis_title='Data',
   yaxis_title='Preço (US$)')
 st.plotly_chart(fig, use_container_width=True)
-
-# # Visualização do dia e preço previstos
-# with st.expander("Visualizar preços previstos"):
-#     st.write(df_forecasting.reset_index())
-
-# Carregar a função do joblib criado para o modelo de previsão
-
-# modelo_carregado = joblib.load('modelo_ets.joblib')
-# # Usar a função carregada
-# forecasting_teste = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
-# st.write(forecasting_teste)
 
