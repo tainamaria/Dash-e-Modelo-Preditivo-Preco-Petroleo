@@ -117,9 +117,9 @@ with col4:
 with open('modelo_ets.pkl', 'rb') as arquivo:
     modelo_carregado = pickle.load(arquivo)
 
-forecasting_teste = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
-forecasting = forecasting_teste
+# forecasting = forecasting_teste
 
 # Criação de um data frame para juntar os dados previstos e os dias futuros
 df_forecasting = pd.DataFrame()
