@@ -28,16 +28,16 @@ st.markdown('Por exemplo, se os dados forem diários e houver uma sazonalidade m
 
 st.header('Performance do Modelo')
 st.markdown('<p style="text-align: justify;">Para a divisão dos dados em treinamento e teste foi utilizado o <span style="font-weight: bold">TimeSeriesSplit</span>, uma técnica de validação cruzada especializada para séries temporais. O TimeSeriesSplit divide os dados em conjuntos de treinamento e teste mantendo a ordem temporal. Ao avaliar o modelo em múltiplas divisões temporais, você obtém uma estimativa mais robusta do desempenho médio do modelo ao longo do tempo. Isso pode ajudar a reduzir o viés de avaliação e fornecer uma avaliação mais confiável do modelo.</p>', unsafe_allow_html = True) 
-st.markdown('Além disso, é possível comparar as diferentes combinações de parâmetros do modelo e avaliar seu desempenho em termos de <span style="font-weight: bold">Erro Médio Absoluto(MAE)</span> ao longo do tempo em diferentes períodos, ajudando a selecionar os modelos mais robustos e generalizáveis para a série temporal.', unsafe_allow_html = True)
+st.markdown('Além disso, é possível comparar as diferentes combinações de parâmetros do modelo e avaliar seu desempenho em termos de <span style="font-weight: bold">Erro Médio Absoluto(MAE)</span> ao longo do tempo em diferentes períodos, ajudando a selecionar o resultado mais robusto e generalizável para a série temporal.', unsafe_allow_html = True)
 
 # Leitura dos dados de petróleo gravados no csv
 arquivo = 'dados_preco_petroleo.csv'
 dados = leitura_csv(arquivo)
 
-# # Leitura do arquivo pickle com a função do modelo de previsão
-# with open('modelo_ets.pkl', 'rb') as arquivo:
-#     modelo_carregado = pickle.load(arquivo)
-# arquivo.close()
+# Leitura do arquivo pickle com a função do modelo de previsão
+with open('modelo_ets.pkl', 'rb') as arquivo:
+    modelo_carregado = pickle.load(arquivo)
+arquivo.close()
 
 # Apresentação do melhor resultado do modelo comparando o erro da base de teste e dados previstos
 st.header('Melhor Resultado do Treino e Teste')
