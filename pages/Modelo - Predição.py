@@ -161,9 +161,17 @@ st.plotly_chart(fig, use_container_width=True)
 # with st.expander("Visualizar preços previstos"):
 #     st.write(df_forecasting.reset_index())
 
-# Arquivo joblib criado para o modelo de previsão
-# Carregar a função
-modelo_carregado = joblib.load('modelo_ets.joblib')
-# Usar a função carregada
-forecasting_teste = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+# # Arquivo joblib criado para o modelo de previsão
+# # Carregar a função
+# modelo_carregado = joblib.load('modelo_ets.joblib')
+# # Usar a função carregada
+# forecasting_teste = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+# st.write(forecasting_teste)
+
+import pickle
+# Carregar a função e os parâmetros de volta
+with open('modelo_ets.pkl', 'rb') as arquivo:
+    funcao_carregada = pickle.load(arquivo)
+
+forecasting_teste = funcao_carregada(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 st.write(forecasting_teste)
