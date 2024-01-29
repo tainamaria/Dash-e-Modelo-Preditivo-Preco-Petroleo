@@ -167,3 +167,5 @@ st.plotly_chart(fig, use_container_width=True)
 # Visualização do dia e preço previstos
 with st.expander("Visualizar preços previstos"):
     st.write(df_forecasting.reset_index())
+
+st.write(forecasting_teste)
