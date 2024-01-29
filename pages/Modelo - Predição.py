@@ -138,14 +138,14 @@ with col1:
     metric9 = data_preco_max[0].strftime('%d/%m/%Y')
     st.markdown(f"<h2 style='{cor_estilizada}'>{metric9}</h2> <span style='{fonte_negrito}'> Data prevista de maior pico </span>", unsafe_allow_html=True)
 with col2:
-    metric10 = preco_max.round(2)
-    st.markdown(f"<h2 style='{cor_estilizada}'>{metric10}</h2> <span style='{fonte_negrito}'> Valor do maior pico </span>", unsafe_allow_html=True)
+    metric10 = preco_max
+    st.markdown(f"<h2 style='{cor_estilizada}'>{metric10:.2f}</h2> <span style='{fonte_negrito}'> Valor do maior pico </span>", unsafe_allow_html=True)
 with col3:
     metric11 = data_preco_min[0].strftime('%d/%m/%Y')
     st.markdown(f"<h2 style='{cor_estilizada}'>{metric11}</h2> <span style='{fonte_negrito}'> Data prevista de menor pico </span>", unsafe_allow_html=True)
 with col4:
-    metric12 = preco_min.round(2)
-    st.markdown(f"<h2 style='{cor_estilizada}'>{metric12}</h2> <span style='{fonte_negrito}'> Valor do menor pico </span>", unsafe_allow_html=True)
+    metric12 = preco_min
+    st.markdown(f"<h2 style='{cor_estilizada}'>{metric12:.2f}</h2> <span style='{fonte_negrito}'> Valor do menor pico </span>", unsafe_allow_html=True)
 
 # Construção do gráfico mostrando os dados treinados e previstos 
 fig = go.Figure()
