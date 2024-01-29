@@ -2,8 +2,8 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-import joblib
-from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros
+# import joblib
+from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros,modelo_ets_previsao
 
 # Configuração da página
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
@@ -110,14 +110,14 @@ with col3:
 with col4:
     opcao_sazonalidade = st.selectbox("Sazonalidade:", ['add', 'additive', 'mul', 'multiplicative'], index = indice_sazonalidade)
 
-# # Função criada para o modelo de previsão
-# forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+# Função criada para o modelo de previsão
+forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
-# Arquivo joblib criado para o modelo de previsão
-# Carregar a função
-modelo_carregado = joblib.load('modelo_ets.joblib')
-# Usar a função carregada
-forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+# # Arquivo joblib criado para o modelo de previsão
+# # Carregar a função
+# modelo_carregado = joblib.load('modelo_ets.joblib')
+# # Usar a função carregada
+# forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
 # Criação de um data frame para juntar os dados previstos e os dias futuros
 df_forecasting = pd.DataFrame()
