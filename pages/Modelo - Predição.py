@@ -120,6 +120,7 @@ with open('modelo_ets.pkl', 'rb') as arquivo:
 forecasting_teste = funcao_carregada(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 st.write(forecasting_teste)
 
+forecasting = forecasting_teste
 # Criação de um data frame para juntar os dados previstos e os dias futuros
 df_forecasting = pd.DataFrame()
 
@@ -164,3 +165,7 @@ fig.update_layout(title= titulo,
   xaxis_title='Data',
   yaxis_title='Preço (US$)')
 st.plotly_chart(fig, use_container_width=True)
+
+# Visualização dos dias e preços previstos
+with st.expander("Visualizar preços previstos"):
+    st.write(df_forecasting.reset_index())
