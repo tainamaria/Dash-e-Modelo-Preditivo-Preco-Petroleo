@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import pickle
-from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros
+from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros,modelo_ets_previsao
 
 # Configuração da página
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
@@ -43,7 +43,7 @@ arquivo.close()
 st.header('Melhor Resultado do Treino e Teste')
 
 # Possibilidade de escolher a quantidade de dias que deseja usar no modelo de treino e teste, mínimo de 90 dias
-qt_dias_treino_teste = st.number_input("Escolha a quantidade de dias mais recentes para utilizar no treino e teste do modelo (Número maior que 90):", min_value=90,max_value=len(dados),value=180)
+qt_dias_treino_teste = st.number_input("Escolha a quantidade de dias mais recentes para utilizar no treino e teste do modelo (Número maior que 90):", min_value=90,value=180)
 st.markdown(f'Resultado destacado com o menor erro alcançado para **{qt_dias_treino_teste} dias** históricos, comparando dados de teste e dados previstos:', unsafe_allow_html = True)
 
 # Função criada para treinar e testar os dados
@@ -107,9 +107,9 @@ indice_sazonalidade = biblioteca_indice[metric8]
 # Parâmetros dinâmicos, considerados para prever a quantidade de dias desejado, tendo como padrão o resultado do modelo de treino e teste
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    qt_dias_historicos = st.number_input("Qtd de dias para treino do modelo:", min_value=60,max_value=len(dados),value=metric5)
+    qt_dias_historicos = st.number_input("Qtd de dias para treino do modelo:", min_value=60,value=metric5)
 with col2:
-    qt_dias_prever = st.number_input("Qtd de dias previsão:", min_value=0,max_value=len(dados),value=metric7)
+    qt_dias_prever = st.number_input("Qtd de dias previsão:", min_value=0,value=metric7)
 with col3:
     opcao_tendencia = st.selectbox("Tendência:", ['add', 'additive', 'mul', 'multiplicative'], index=indice_tendencia)
 with col4:
