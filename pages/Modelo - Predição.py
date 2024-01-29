@@ -115,7 +115,7 @@ forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opc
 
 # # Arquivo joblib criado para o modelo de previsão
 # # Carregar a função
-# modelo_carregado = joblib.load('modelo_ets.joblib')
+modelo_carregado = joblib.load('modelo_ets.joblib')
 # # Usar a função carregada
 # forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
