@@ -43,7 +43,7 @@ arquivo.close()
 st.header('Melhor Resultado do Treino e Teste')
 
 # Possibilidade de escolher a quantidade de dias que deseja usar no modelo de treino e teste
-qt_dias_treino_teste = st.number_input("Escolha a quantidade de dias mais recentes para utilizar no treino e teste do modelo (Número maior que 60):", min_value=60,value=180)
+qt_dias_treino_teste = st.number_input("Escolha a quantidade de dias mais recentes para utilizar no treino e teste do modelo (Número maior que 70):", min_value=70,value=180)
 st.markdown(f'Resultado destacado com o menor erro alcançado para **{qt_dias_treino_teste} dias** históricos, comparando dados de teste e dados previstos:', unsafe_allow_html = True)
 
 # Função criada para treinar e testar os dados
@@ -107,7 +107,7 @@ indice_sazonalidade = biblioteca_indice[metric8]
 # Parâmetros dinâmicos, considerados para prever a quantidade de dias desejado, tendo como padrão o resultado do modelo de treino e teste
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    qt_dias_historicos = st.number_input("Qtd de dias para treino do modelo:", min_value=60,value=metric5)
+    qt_dias_historicos = st.number_input("Qtd de dias para treino do modelo:", min_value=70,value=metric5)
 with col2:
     qt_dias_prever = st.number_input("Qtd de dias previsão:", min_value=0,value=metric7)
 with col3:
@@ -115,12 +115,8 @@ with col3:
 with col4:
     opcao_sazonalidade = st.selectbox("Sazonalidade:", ['add', 'additive', 'mul', 'multiplicative'], index = indice_sazonalidade)
 
-# Modelo precisa de no mínimo 60 dias para treino
-if qt_dias_historicos < 60:
-    qt_dias_historicos = 60
-
 # Carregar a função do modelo de previsão
-forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
 # Criação de um data frame para juntar os dados previstos e os dias futuros
 df_forecasting = pd.DataFrame()
