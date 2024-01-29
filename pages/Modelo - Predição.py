@@ -111,7 +111,7 @@ with col4:
     opcao_sazonalidade = st.selectbox("Sazonalidade:", ['add', 'additive', 'mul', 'multiplicative'], index = indice_sazonalidade)
 
 # Função criada para o modelo de previsão
-forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+# forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
 # Carregar a função do arquivo pickle com o o modelo de previsão
 with open('modelo_ets.pkl', 'rb') as arquivo:
