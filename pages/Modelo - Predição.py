@@ -95,10 +95,8 @@ st.header('Previsão')
 
 # Atribuindo índice para os parâmetros, para que o valor padrão da previsão, seja o resultado do modelo de treino e teste
 biblioteca_indice = {
-    'add': 0,
-    'additive': 1,
-    'mul': 2,
-    'multiplicative': 3
+    'additive': 0,
+    'multiplicative': 1
 }
 
 indice_tendencia = biblioteca_indice[metric6]

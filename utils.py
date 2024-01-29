@@ -117,8 +117,8 @@ def modelo_ets_perfomance(dados, qt_dias):
     dados = dados.tail(qt_dias)
     # Definindo os parâmetros a serem testados
     parametros_grid = {
-        'trend': ['add', 'additive', 'mul', 'multiplicative'],
-        'seasonal': ['add', 'additive', 'mul', 'multiplicative'],
+        'trend': ['additive', 'multiplicative'],
+        'seasonal': ['additive', 'multiplicative'],
         'seasonal_periods': [30],  # Assumindo um padrão sazonal mensal
     }
 
