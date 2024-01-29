@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import pickle
-from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros
+from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros,modelo_ets_previsao
 
 # Configuração da página
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
@@ -34,10 +34,10 @@ st.markdown('Além disso, é possível comparar as diferentes combinações de p
 arquivo = 'dados_preco_petroleo.csv'
 dados = leitura_csv(arquivo)
 
-# Leitura do arquivo pickle com a função do modelo de previsão
-with open('modelo_ets.pkl', 'rb') as arquivo:
-    modelo_carregado = pickle.load(arquivo)
-arquivo.close()
+# # Leitura do arquivo pickle com a função do modelo de previsão
+# with open('modelo_ets.pkl', 'rb') as arquivo:
+#     modelo_carregado = pickle.load(arquivo)
+# arquivo.close()
 
 # Apresentação do melhor resultado do modelo comparando o erro da base de teste e dados previstos
 st.header('Melhor Resultado do Treino e Teste')
@@ -116,7 +116,7 @@ with col4:
     opcao_sazonalidade = st.selectbox("Sazonalidade:", ['add', 'additive', 'mul', 'multiplicative'], index = indice_sazonalidade)
 
 # Carregar a função do modelo de previsão
-forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
 # Criação de um data frame para juntar os dados previstos e os dias futuros
 df_forecasting = pd.DataFrame()
