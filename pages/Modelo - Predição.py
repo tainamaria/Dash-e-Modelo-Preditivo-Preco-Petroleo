@@ -169,3 +169,4 @@ with st.expander("Visualizar preços previstos"):
     st.write(df_forecasting.reset_index())
 
 st.write(forecasting_teste)
+st.write(forecasting)
