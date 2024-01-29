@@ -109,9 +109,9 @@ with col1:
 with col2:
     qt_dias_prever = st.number_input("Qtd de dias previsão:", min_value=0, max_value=len(dados), value=metric7)
 with col3:
-    opcao_tendencia = st.selectbox("Tendência:", ['add', 'additive', 'mul', 'multiplicative'], index=indice_tendencia)
+    opcao_tendencia = st.selectbox("Tendência:", ['additive','multiplicative'], index=indice_tendencia)
 with col4:
-    opcao_sazonalidade = st.selectbox("Sazonalidade:", ['add', 'additive', 'mul', 'multiplicative'], index = indice_sazonalidade)
+    opcao_sazonalidade = st.selectbox("Sazonalidade:", ['additive','multiplicative'], index = indice_sazonalidade)
 
 # Carregar a função do modelo de previsão
 forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
