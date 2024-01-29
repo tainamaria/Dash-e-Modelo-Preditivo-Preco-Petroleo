@@ -109,8 +109,16 @@ with col3:
     opcao_tendencia = st.selectbox("Tendência:", ['add', 'additive', 'mul', 'multiplicative'], index=indice_tendencia)
 with col4:
     opcao_sazonalidade = st.selectbox("Sazonalidade:", ['add', 'additive', 'mul', 'multiplicative'], index = indice_sazonalidade)
+
 # Função criada para o modelo de previsão
 forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+
+# Carregar a função do arquivo pickle com o o modelo de previsão
+with open('modelo_ets.pkl', 'rb') as arquivo:
+    funcao_carregada = pickle.load(arquivo)
+
+forecasting_teste = funcao_carregada(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+st.write(forecasting_teste)
 
 # Criação de um data frame para juntar os dados previstos e os dias futuros
 df_forecasting = pd.DataFrame()
@@ -156,21 +164,3 @@ fig.update_layout(title= titulo,
   xaxis_title='Data',
   yaxis_title='Preço (US$)')
 st.plotly_chart(fig, use_container_width=True)
-
-# # Visualização do dia e preço previstos
-# with st.expander("Visualizar preços previstos"):
-#     st.write(df_forecasting.reset_index())
-
-# # Arquivo joblib criado para o modelo de previsão
-# # Carregar a função
-# modelo_carregado = joblib.load('modelo_ets.joblib')
-# # Usar a função carregada
-# forecasting_teste = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
-# st.write(forecasting_teste)
-
-# Carregar a função e os parâmetros de volta
-with open('modelo_ets.pkl', 'rb') as arquivo:
-    funcao_carregada = pickle.load(arquivo)
-
-forecasting_teste = funcao_carregada(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
-st.write(forecasting_teste)
