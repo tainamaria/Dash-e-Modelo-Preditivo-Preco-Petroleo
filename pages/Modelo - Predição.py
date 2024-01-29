@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import pickle
-from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros
+from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros,modelo_ets_previsao
 
 # Configuração da página
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
@@ -109,12 +109,8 @@ with col3:
     opcao_tendencia = st.selectbox("Tendência:", ['add', 'additive', 'mul', 'multiplicative'], index=indice_tendencia)
 with col4:
     opcao_sazonalidade = st.selectbox("Sazonalidade:", ['add', 'additive', 'mul', 'multiplicative'], index = indice_sazonalidade)
-   
-# Carregar a função do pickle criado para o modelo de previsão
-with open('modelo_ets.pkl', 'rb') as arquivo:
-    modelo_carregado = pickle.load(arquivo)
-
-forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+# Função criada para o modelo de previsão
+forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
 # Criação de um data frame para juntar os dados previstos e os dias futuros
 df_forecasting = pd.DataFrame()
@@ -161,3 +157,20 @@ fig.update_layout(title= titulo,
   yaxis_title='Preço (US$)')
 st.plotly_chart(fig, use_container_width=True)
 
+# # Visualização do dia e preço previstos
+# with st.expander("Visualizar preços previstos"):
+#     st.write(df_forecasting.reset_index())
+
+# # Arquivo joblib criado para o modelo de previsão
+# # Carregar a função
+# modelo_carregado = joblib.load('modelo_ets.joblib')
+# # Usar a função carregada
+# forecasting_teste = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+# st.write(forecasting_teste)
+
+# Carregar a função e os parâmetros de volta
+with open('modelo_ets.pkl', 'rb') as arquivo:
+    funcao_carregada = pickle.load(arquivo)
+
+forecasting_teste = funcao_carregada(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+st.write(forecasting_teste)
