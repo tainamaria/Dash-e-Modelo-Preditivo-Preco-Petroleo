@@ -42,8 +42,8 @@ arquivo.close()
 # Apresentação do melhor resultado do modelo comparando o erro da base de teste e dados previstos
 st.header('Melhor Resultado do Treino e Teste')
 
-# Possibilidade de escolher a quantidade de dias que deseja usar no modelo de treino e teste, mínimo de 90 dias
-qt_dias_treino_teste = st.number_input("Escolha a quantidade de dias mais recentes para utilizar no treino e teste do modelo (Número maior que 90):", min_value=90, max_value=len(dados), value=180)
+# Possibilidade de escolher a quantidade de dias que deseja usar no modelo de treino e teste, mínimo de 90 dias para melhor performance
+qt_dias_treino_teste = st.number_input("Escolha a quantidade de dias mais recentes para utilizar no treino e teste do modelo:", min_value=90, max_value=len(dados), value=180)
 st.markdown(f'Resultado destacado com o menor erro alcançado para **{qt_dias_treino_teste} dias** históricos, comparando dados de teste e dados previstos:', unsafe_allow_html = True)
 
 # Função criada para treinar e testar os dados
@@ -101,6 +101,9 @@ biblioteca_indice = {
 
 indice_tendencia = biblioteca_indice[metric6]
 indice_sazonalidade = biblioteca_indice[metric8]
+
+# Introdução sobre construção do modelo
+st.markdown('<p style="text-align: justify;"> O modelo de previsão foi persistido em um arquivo serializável com auxílio do módulo Python chamado <span style="font-weight: bold">Pickle</span>, essa prática pode trazer eficiência para o resultado e, é facilmente integrado com outras ferramentas e sistemas. A seguir, selecione os parâmetros necessários para a previsão, os quais são pré-determinados com base nos resultados do treinamento e teste mencionados anteriormente.</p>', unsafe_allow_html = True)
 
 # Parâmetros dinâmicos, considerados para prever a quantidade de dias desejado, tendo como padrão o resultado do modelo de treino e teste
 col1, col2, col3, col4 = st.columns(4)
