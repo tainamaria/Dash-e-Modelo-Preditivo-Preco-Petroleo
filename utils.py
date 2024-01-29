@@ -174,22 +174,22 @@ def modelo_ets_perfomance(dados, qt_dias):
 
     return melhor_mae, melhores_parametros, melhores_dados_teste, melhores_dados_treinamento, melhor_resultado_fit, melhor_wmape,df_completo
 
-# # Armazenamento do modelo em cache
-# @st.cache_resource
-# # Modelo ETS para previsão dos dias, utilizando qtd de dias recentes para treinamento, qtd de dias que deseja prever e, os parâmetros de tendência e sazonalidade
-# def modelo_ets_previsao(dados, qt_dias_historico, qt_dias_prever, trend, seasonal):
-#     dados = dados.tail(qt_dias_historico)
+# Armazenamento do modelo em cache
+@st.cache_resource
+# Modelo ETS para previsão dos dias, utilizando qtd de dias recentes para treinamento, qtd de dias que deseja prever e, os parâmetros de tendência e sazonalidade
+def modelo_ets_previsao(dados, qt_dias_historico, qt_dias_prever, trend, seasonal):
+    dados = dados.tail(qt_dias_historico)
 
-#     # Criando o modelo ETS
-#     modelo_ets = ExponentialSmoothing(dados['Preco'], trend=trend, seasonal=seasonal, seasonal_periods=30)
+    # Criando o modelo ETS
+    modelo_ets = ExponentialSmoothing(dados['Preco'], trend=trend, seasonal=seasonal, seasonal_periods=30)
 
-#     # Treinando o modelo
-#     resultado = modelo_ets.fit()
+    # Treinando o modelo
+    resultado = modelo_ets.fit()
 
-#     # Fazendo previsões
-#     previsao = resultado.forecast(steps=qt_dias_prever)
+    # Fazendo previsões
+    previsao = resultado.forecast(steps=qt_dias_prever)
 
-#     return previsao
+    return previsao
 
 # Futuros dias úteis da semana
 def dias_uteis_futuros(data_inicial,qtd_dias):
