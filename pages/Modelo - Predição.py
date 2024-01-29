@@ -110,13 +110,13 @@ with col3:
 with col4:
     opcao_sazonalidade = st.selectbox("Sazonalidade:", ['add', 'additive', 'mul', 'multiplicative'], index = indice_sazonalidade)
 
-# Função criada para o modelo de previsão
-forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
+# # Função criada para o modelo de previsão
+# forecasting = modelo_ets_previsao(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
-# # Arquivo joblib criado para o modelo de previsão
-# # Carregar a função
+# Arquivo joblib criado para o modelo de previsão
+# Carregar a função
 modelo_carregado = joblib.load('modelo_ets.joblib')
-# # Usar a função carregada
+# Usar a função carregada
 forecasting = modelo_carregado(dados, qt_dias_historicos, qt_dias_prever, opcao_tendencia, opcao_sazonalidade)
 
 # Criação de um data frame para juntar os dados previstos e os dias futuros
@@ -167,5 +167,3 @@ st.plotly_chart(fig, use_container_width=True)
 # Visualização do dia e preço previstos
 with st.expander("Visualizar preços previstos"):
     st.write(df_forecasting.reset_index())
-
-st.write(forecasting)
