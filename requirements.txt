@@ -23,6 +23,6 @@ googletrans==3.0.0
 google.cloud
 google.cloud.bigquery
 google.cloud.core
-google.auth
+google.oauth2
 google.resumable.media
 google.api.core
