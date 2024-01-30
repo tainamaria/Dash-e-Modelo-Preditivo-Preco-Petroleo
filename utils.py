@@ -16,7 +16,7 @@ from pandas_gbq import to_gbq
 
 # Armazenamento dos dados em cache, melhorando a performance do site
 @st.cache_data 
-# Leitura do dados no site e armazenamento em um csv
+# Leitura do dados no site e armazenamento no banco de dados no BigQuery
 def webscraping(url,coluna): # a aplicação faz leitura de dois sites, fazendo necessário a identificação da URL e como será chamada a coluna de valores
     dados = pd.read_html(url, encoding='utf-8', decimal=',')
     dados = dados[2]
@@ -49,6 +49,25 @@ def webscraping(url,coluna): # a aplicação faz leitura de dois sites, fazendo 
                     if_exists = parametro,
                     credentials = credentials)
     return dados
+
+# Armazenamento dos dados em cache
+@st.cache_data 
+# Consulta full de cada tabela criada no BigQuery
+def select_bq (tabela):
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
+    client = bigquery.Client(credentials=credentials)
+
+    query = f'select * from `sixth-aloe-402921.dados_preco_petroleo.{tabela}`'
+
+    resultado = client.query(query)
+    df_resultado = resultado.to_dataframe()
+
+    df_resultado['Data'] = pd.to_datetime(df_resultado['Data'], format = '%d/%m/%Y')
+    df_resultado.set_index('Data', inplace = True)
+    df_resultado.sort_index(ascending=True, inplace=True)
+    return df_resultado
 
 # Os dados do site de petróleo não são atualizados todos os dias, mas como a aplicação está armazenando os dados em cache, quando estiverem desatualizados, se faz necessário clicar 
 def atualiza_dados():
@@ -263,20 +282,3 @@ def graf_marcado_multiplos(x, y, picos_indices_max, picos_indices_min,y2):
         legend=dict(orientation='h', y=1.15, x=0.5, xanchor='center', yanchor='top')
     )
     return fig
-
-@st.cache_data 
-def select_bq (tabela):
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"]
-    )
-    client = bigquery.Client(credentials=credentials)
-
-    query = f'select * from `sixth-aloe-402921.dados_preco_petroleo.{tabela}`'
-
-    resultado = client.query(query)
-    df_resultado = resultado.to_dataframe()
-
-    df_resultado['Data'] = pd.to_datetime(df_resultado['Data'], format = '%d/%m/%Y')
-    df_resultado.set_index('Data', inplace = True)
-    df_resultado.sort_index(ascending=True, inplace=True)
-    return df_resultado
