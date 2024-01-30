@@ -264,7 +264,7 @@ def graf_marcado_multiplos(x, y, picos_indices_max, picos_indices_min,y2):
     )
     return fig
 
-
+@st.cache_data 
 def select_bq (tabela):
     credentials = service_account.Credentials.from_service_account_info(
         st.secrets["gcp_service_account"]
