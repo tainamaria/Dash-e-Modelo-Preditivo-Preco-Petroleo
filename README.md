@@ -10,23 +10,29 @@
    <li> Fazer deploy do modelo em produção</li>
 </ul>
 
+<h2> :computer: Link da aplicação</h2>
+📊 <a href= "https://dash-e-modelo-preditivo-preco-petroleo.streamlit.app">STREAMLIT</a>
+
 <h2> :hammer_and_wrench: Tecnologias utilizadas</h2>
 <a href="https://imgbox.com/zPWZoqf8" target="_blank"><img src="https://thumbs2.imgbox.com/7a/64/zPWZoqf8_t.png" alt="image host"/></a>
 <a href="https://imgbox.com/I7ADNVgD" target="_blank"><img src="https://thumbs2.imgbox.com/ee/16/I7ADNVgD_t.png" alt="image host"/></a>
+<a href="https://imgbox.com/UkUGeFZV" target="_blank"><img src="https://thumbs2.imgbox.com/8e/de/UkUGeFZV_t.png" alt="image host"/></a>
 <a href="https://imgbox.com/nRi9wGf8" target="_blank"><img src="https://thumbs2.imgbox.com/1b/24/nRi9wGf8_t.png" alt="image host"/></a>
 <a href="https://imgbox.com/YOjgt7zl" target="_blank"><img src="https://thumbs2.imgbox.com/cb/90/YOjgt7zl_t.png" alt="image host"/></a> 
-<a href="https://imgbox.com/2mF1oLMP" target="_blank"><img src="https://thumbs2.imgbox.com/f9/a1/2mF1oLMP_t.png" alt="image host"/></a>
+<a href="https://imgbox.com/gZaLOYZm" target="_blank"><img src="https://thumbs2.imgbox.com/84/3b/gZaLOYZm_t.png" alt="image host"/></a>
 
 <h2> :books: Bibliotecas Python utilizadas</h2>
 <ul>
   <li>Streamlit</li>
+  <li>Google-Cloud-Bigquery</li>
+  <li>Pandas-gbq</li>
    <li>Plotly</li>
    <li>Pandas</li>
+  <li>Numpy</li>
    <li>Lxml</li>
   <li>Statsmodels</li>
   <li>Scikit-learn</li>
     <li>Matplotlib</li>
-  <li>Numpy</li>
 </ul>
 
 <h2>👩‍🎓 Equipe do projeto</h2>
