@@ -27,7 +27,7 @@
 # google.resumable.media
 # google.api.core
 
-
+/home/adminuser/venv/bin/python -m pip install --upgrade pip
 absl-py==1.4.0
 altair==5.2.0
 asn1crypto==1.5.1
